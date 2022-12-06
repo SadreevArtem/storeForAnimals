@@ -1,0 +1,19 @@
+.login {
+  height: 60px;
+}
+
+.wr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+button {
+  margin-right: 15px;
+  font-size: 20px;
+  background: white;
+  border-radius: 15px;
+  padding: 10px;
+  &:hover{
+    background: #fae469;
+  }
+}

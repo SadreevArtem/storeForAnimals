@@ -1,10 +1,12 @@
-.header {
+.wr{
   background-color: #fae469;
+  
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 30px calc(50% - 500px);
 }
+
 .logo_container {
   display: flex;
   align-items: center;
@@ -16,20 +18,3 @@
   span {
     font-size: 30px;
   }
-input {
-  padding: 15px;
-  border: 3px solid black;
-  border-radius: 16px;
-}
-
-@media (max-width: 1059px) {
-  .header {
-  padding-left: 30px;
-  padding-right: 30px;
-  }
-}    
-@media (max-width: 650px) {
-    .span {
-      display: none;
-    }
-}
