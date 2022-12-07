@@ -6,12 +6,17 @@ import stylesAccount from './styles.module.scss'
 export function Authorization() {
   return (
     <div className={stylesAccount.wr}>
-      <button type="submit">SignUp</button>
-      <Link to="signin" type="button">
-        <button type="submit">SignIn</button>
+      <Link to="/signup">
+        <button type="button">SignUp</button>
       </Link>
 
-      <img src={account} alt="Dog" className={stylesAccount.login} />
+      <Link to="signin" type="button">
+        <button type="button">SignIn</button>
+      </Link>
+      <Link to="/useraccount">
+        <img src={account} alt="Dog" className={stylesAccount.login} />
+      </Link>
+
     </div>
   )
 }
