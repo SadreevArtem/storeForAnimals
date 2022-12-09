@@ -7,16 +7,20 @@ import stylesSignIn from './styles.module.scss'
 /* eslint-disable linebreak-style */
 export function SignIn() {
   const [input, setInput] = useState({})
-  const { addToken, api, token } = useProductContext()
+  const { api } = useProductContext()
   const navigate = useNavigate()
+  const tokenLS = localStorage.getItem('TOKEN') ? JSON.parse(localStorage.getItem('TOKEN')) : undefined
+  console.log(tokenLS)
   console.log(input)
 
   const signInHandler = (e) => {
     e.preventDefault()
     api.logIn(input)
-      .then((result) => addToken(result.token))
+      .then((result) => {
+        localStorage.setItem('TOKEN', JSON.stringify(result.token))
+      })
   }
-  if (token) {
+  if (tokenLS) {
     navigate('/')
     return <h2>Вы авторизованы</h2>
   }

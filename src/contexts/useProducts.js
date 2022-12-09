@@ -1,14 +1,8 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable quote-props */
-import { useState } from 'react'
 
 export function useProducts() {
-  const [token, setToken] = useState('')
-
-  const addToken = (response) => {
-    setToken(response)
-    console.log(token)
-  }
+  const tokenLS = localStorage.getItem('TOKEN') ? JSON.parse(localStorage.getItem('TOKEN')) : undefined
   // const [products, setProducts] = useState([])
   class API {
     constructor(baseUrl) {
@@ -42,7 +36,18 @@ export function useProducts() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'authorization': `Bearer ${token}`,
+          'authorization': `Bearer ${tokenLS}`,
+        },
+      })
+      return response.json()
+    }
+
+    async getProducts() {
+      const response = await fetch(`${this.baseUrl}/products`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': `Bearer ${tokenLS}`,
         },
       })
       return response.json()
@@ -52,8 +57,6 @@ export function useProducts() {
   const api = new API('https://api.react-learning.ru')
   return {
     // products,
-    token,
-    addToken,
     api,
   }
 }

@@ -1,0 +1,21 @@
+.wr{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 20px;
+}
+.card_container{
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.img{
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
