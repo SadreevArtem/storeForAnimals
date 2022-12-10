@@ -11,7 +11,7 @@ export function Index() {
   if (!tokenLS) return <Navigate to="/signin" />
   const [products, setProducts] = useState([])
   const { api } = useProductContext()
-  console.log(products)
+  const id = '_id'
   useEffect(() => {
     api
       .getProducts()
@@ -20,24 +20,38 @@ export function Index() {
       })
   }, [])
 
+  const discountFunc = (price, discont) => Math.round((price - price * discont * 0.01) / 100) * 100
+
   const generateProductsCard = (el) => (
-    <div>
+    <div key={el[id]}>
       <div>
         <div className={stylesIndex.card_container}>
-          <div>
+          <div className={stylesIndex.imgWr}>
             <img className={stylesIndex.img} src={el.pictures} alt="" />
           </div>
           <div>
-            <h3>{el.name}</h3>
-            <h4>
+            <h4>{el.name}</h4>
+            <h5 className={el.discount ? stylesIndex.discount_price : 'hidden'}>
               {el.price}
+              ₽
+            </h5>
+            <h4 className={el.discount ? stylesIndex.redPrice : ''}>
+              {el.discount ? discountFunc(el.price, el.discount) : el.price}
               {' '}
-              руб
+              ₽
             </h4>
-            <p>{el.wight}</p>
+            <p className={stylesIndex.p}>{el.wight}</p>
           </div>
           <div className={stylesIndex.btn}>
-            <button className={stylesIndex.card_button} type="button">Купить</button>
+            <button className={stylesIndex.card_button} type="button">в корзину</button>
+          </div>
+          <div className={el.discount ? stylesIndex.discount : 'hidden'}>
+            -
+            {el.discount}
+            %
+          </div>
+          <div className={el.tags.includes('new') ? stylesIndex.newSticker : 'hidden'}>
+            NEW
           </div>
         </div>
       </div>

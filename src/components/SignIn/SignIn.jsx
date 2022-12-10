@@ -3,26 +3,30 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
 import stylesSignIn from './styles.module.scss'
+import img from './2527488.png'
 
 /* eslint-disable linebreak-style */
 export function SignIn() {
   const [input, setInput] = useState({})
   const { api } = useProductContext()
   const navigate = useNavigate()
-  const tokenLS = localStorage.getItem('TOKEN') ? JSON.parse(localStorage.getItem('TOKEN')) : undefined
-  console.log(tokenLS)
-  console.log(input)
+  const tokenLS = localStorage.getItem('TOKEN') ? JSON.parse(localStorage.getItem('TOKEN')) : null
 
   const signInHandler = (e) => {
     e.preventDefault()
     api.logIn(input)
       .then((result) => {
         localStorage.setItem('TOKEN', JSON.stringify(result.token))
+        navigate('/')
       })
   }
   if (tokenLS) {
-    navigate('/')
-    return <h2>Вы авторизованы</h2>
+    return (
+      <div className={stylesSignIn.login}>
+        <h2>Вы авторизованы</h2>
+        <img src={img} alt="Dog" />
+      </div>
+    )
   }
   return (
     <div>

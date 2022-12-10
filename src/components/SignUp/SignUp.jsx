@@ -6,7 +6,6 @@ import stylesSignUp from './styles.module.scss'
 
 export function SignUp() {
   const [input, setInput] = useState({})
-  console.log(input)
   const { api } = useProductContext()
   const navigate = useNavigate()
 

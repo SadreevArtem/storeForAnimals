@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 import { Link } from 'react-router-dom'
 import stylesHeader from './styles.module.scss'
-import dogLogo from './dog_logo.png'
+import dogLogo from './new_logo.png'
 import { Authorization } from '../Authorization/Authorization'
 
 export function Header() {
@@ -9,8 +9,8 @@ export function Header() {
     <header className={stylesHeader.header}>
       <Link to="/">
         <div className={stylesHeader.logo_container}>
-          <img src={dogLogo} alt="Dog_logo" />
-          <span className={stylesHeader.span}>DogFood</span>
+          <img className={stylesHeader.img} src={dogLogo} alt="Dog_logo" />
+          <span className={stylesHeader.span}>BOBIK KING</span>
         </div>
       </Link>
       <div className="search_bar">

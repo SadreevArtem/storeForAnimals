@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import dogLogo from './dog_logo.png'
+import dogLogo from './new_logo.png'
 import footerStyles from './styles.module.scss'
 
 export function Footer() {
@@ -9,10 +9,10 @@ export function Footer() {
         <div className={footerStyles.wr_logo}>
           <div className={footerStyles.logo_container}>
             <img src={dogLogo} alt="Dog_logo" />
-            <span className="">DogFood</span>
+            <span className={footerStyles.logo_text}>BOBIK KING</span>
           </div>
           <div>
-            <p> &reg; Интернет магазин DogFood.ru</p>
+            <p> &reg; Интернет магазин bobik-king.ru</p>
           </div>
         </div>
         <div>

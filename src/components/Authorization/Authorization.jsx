@@ -1,20 +1,29 @@
 /* eslint-disable linebreak-style */
 import { Link } from 'react-router-dom'
-import account from './2527488.png'
+
 import stylesAccount from './styles.module.scss'
 
 export function Authorization() {
   return (
     <div className={stylesAccount.wr}>
       <Link to="/signup">
-        <button type="button">SignUp</button>
+        <div className={stylesAccount.wrLink}>
+
+          <button type="button">Регистрация</button>
+        </div>
       </Link>
 
       <Link to="signin" type="button">
-        <button type="button">SignIn</button>
+        <div className={stylesAccount.wrLink}>
+
+          <button type="button">Войти</button>
+        </div>
       </Link>
       <Link to="/useraccount">
-        <img src={account} alt="Dog" className={stylesAccount.login} />
+        <div className={stylesAccount.wrLink}>
+
+          <button type="button">Аккаунт</button>
+        </div>
       </Link>
 
     </div>

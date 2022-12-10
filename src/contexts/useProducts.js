@@ -52,6 +52,18 @@ export function useProducts() {
       })
       return response.json()
     }
+
+    async updateUserInfo(input) {
+      const response = await fetch(`${this.baseUrl}/v2/sm8/users/me`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': `Bearer ${tokenLS}`,
+        },
+        body: JSON.stringify(input),
+      })
+      return response.json()
+    }
   }
 
   const api = new API('https://api.react-learning.ru')

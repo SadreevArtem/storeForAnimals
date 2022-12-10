@@ -1,5 +1,5 @@
 .wr{
-  background-color: #fae469;
+  background-color: #502314;
   margin-top: auto;
   
   
@@ -10,6 +10,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 30px calc(50% - 500px);
+  font-family: 'Oswald', sans-serif;
+  color: #f5ebdc;
 }
 
 .logo_container {
@@ -22,4 +24,7 @@
   }
   span {
     font-size: 30px;
+  }
+  .logo_text{
+   font-family: 'Oswald', sans-serif;
   }

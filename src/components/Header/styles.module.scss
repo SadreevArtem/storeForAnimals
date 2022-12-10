@@ -1,5 +1,6 @@
 .header {
-  background-color: #fae469;
+  background-color: #502314;
+  color: #f5ebdc;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -9,18 +10,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-    img{
-      height: 100px;
-    } 
+    
   }
   span {
+    color: #f5ebdc;
     font-size: 30px;
+    padding-left: 20px;
   }
+ .img{
+  height: 100px;
+ } 
 input {
   padding: 15px;
-  border: 3px solid black;
+  border: 1px solid black;
   border-radius: 16px;
 }
+
 
 @media (max-width: 1059px) {
   .header {

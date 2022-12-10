@@ -1,6 +1,7 @@
 body {
   margin: 0;
   height: 100%;
+  font-family: 'Oswald', sans-serif;
 }
 .App {
   display: flex;
@@ -11,7 +12,19 @@ a{
   text-decoration: none;
   color: #000
 }
-
+button {
+  /* margin-right: 15px; */
+  font-family: 'Oswald', sans-serif;
+  font-size: 18px;
+  color: #f5ebdc;
+  background: #ff8720;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 20px; 
+  }
+  .hidden{
+    display: none;
+  }
 
 
 
