@@ -13,7 +13,7 @@ export function SignUp() {
     e.preventDefault()
 
     api.signUp(input)
-      .then((result) => console.log(result))
+      .then((result) => alert(result))
     navigate('/')
   }
 

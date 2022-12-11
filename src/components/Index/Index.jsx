@@ -7,10 +7,9 @@ import stylesIndex from './styles.module.scss'
 // import stylesIndex from './styles.module.scss'
 
 export function Index() {
-  const tokenLS = localStorage.getItem('TOKEN') ? JSON.parse(localStorage.getItem('TOKEN')) : undefined
+  const { api, tokenLS } = useProductContext()
   if (!tokenLS) return <Navigate to="/signin" />
   const [products, setProducts] = useState([])
-  const { api } = useProductContext()
   const id = '_id'
   useEffect(() => {
     api

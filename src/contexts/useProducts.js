@@ -43,14 +43,18 @@ export function useProducts() {
     }
 
     async getProducts() {
-      const response = await fetch(`${this.baseUrl}/products`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'authorization': `Bearer ${tokenLS}`,
-        },
-      })
-      return response.json()
+      try {
+        const response = await fetch(`${this.baseUrl}/products`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${tokenLS}`,
+          },
+        })
+        return response.json()
+      } catch (error) {
+        throw new Error(error)
+      }
     }
 
     async updateUserInfo(input) {
@@ -70,5 +74,6 @@ export function useProducts() {
   return {
     // products,
     api,
+    tokenLS,
   }
 }
