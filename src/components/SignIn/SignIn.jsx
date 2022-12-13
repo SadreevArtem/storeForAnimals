@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 import { useState } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
 import stylesSignIn from './styles.module.scss'
 import img from './2527488.png'
@@ -8,16 +8,17 @@ import img from './2527488.png'
 /* eslint-disable linebreak-style */
 export function SignIn() {
   const [input, setInput] = useState({})
-  const { api, tokenLS } = useProductContext()
+  const tokenLS = localStorage.getItem('TOKEN') ? JSON.parse(localStorage.getItem('TOKEN')) : undefined
+  const { api } = useProductContext()
+  const navigate = useNavigate()
 
   const signInHandler = (e) => {
     e.preventDefault()
     api.logIn(input)
       .then((result) => {
         localStorage.setItem('TOKEN', JSON.stringify(result.token))
-        document.location.reload()
+        navigate('/')
       })
-      .then(() => <Navigate to="/" />)
   }
   if (tokenLS) {
     return (

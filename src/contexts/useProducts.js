@@ -3,6 +3,7 @@
 
 export function useProducts() {
   const tokenLS = localStorage.getItem('TOKEN') ? JSON.parse(localStorage.getItem('TOKEN')) : undefined
+
   // const [products, setProducts] = useState([])
   class API {
     constructor(baseUrl) {
@@ -31,24 +32,24 @@ export function useProducts() {
       return response.json()
     }
 
-    async getUserInfo() {
+    async getUserInfo(token) {
       const response = await fetch(`${this.baseUrl}/v2/sm8/users/me`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'authorization': `Bearer ${tokenLS}`,
+          'authorization': `Bearer ${token}`,
         },
       })
       return response.json()
     }
 
-    async getProducts() {
+    async getProducts(token) {
       try {
         const response = await fetch(`${this.baseUrl}/products`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'authorization': `Bearer ${tokenLS}`,
+            'authorization': `Bearer ${token}`,
           },
         })
         return response.json()
@@ -74,6 +75,5 @@ export function useProducts() {
   return {
     // products,
     api,
-    tokenLS,
   }
 }

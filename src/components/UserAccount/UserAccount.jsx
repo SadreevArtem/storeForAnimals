@@ -6,13 +6,13 @@ import styleUserInfo from './styles.module.scss'
 
 export function UserAccount() {
   const [user, setUser] = useState({})
-
-  const { api, tokenLS } = useProductContext()
+  const tokenLS = localStorage.getItem('TOKEN') ? JSON.parse(localStorage.getItem('TOKEN')) : undefined
+  const { api } = useProductContext()
   if (!tokenLS) return <Navigate to="/signin" />
   useEffect(() => {
     api
-      .getUserInfo()
-      .then((result) => setUser(result))
+      .getUserInfo(tokenLS)
+      .then(setUser)
   }, [])
 
   const generateInfo = (obj) => (
