@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 import { Link } from 'react-router-dom'
 import stylesHeader from './styles.module.scss'
 import dogLogo from './new_logo.png'

@@ -1,20 +1,16 @@
-/* eslint-disable linebreak-style */
-
 import { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
 import stylesIndex from './styles.module.scss'
-// import stylesIndex from './styles.module.scss'
 
 export function Index() {
-  const { api } = useProductContext()
-  const tokenLS = localStorage.getItem('TOKEN') ? JSON.parse(localStorage.getItem('TOKEN')) : undefined
-  if (!tokenLS) return <Navigate to="/signin" />
+  const { api, token } = useProductContext()
+  if (!token) return <Navigate to="/signin" />
   const [products, setProducts] = useState([])
   const id = '_id'
   useEffect(() => {
     api
-      .getProducts(tokenLS)
+      .getProducts(token)
       .then((result) => {
         setProducts(result.products)
       })

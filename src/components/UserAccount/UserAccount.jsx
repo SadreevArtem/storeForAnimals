@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 import { useEffect, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
@@ -6,12 +5,11 @@ import styleUserInfo from './styles.module.scss'
 
 export function UserAccount() {
   const [user, setUser] = useState({})
-  const tokenLS = localStorage.getItem('TOKEN') ? JSON.parse(localStorage.getItem('TOKEN')) : undefined
-  const { api } = useProductContext()
-  if (!tokenLS) return <Navigate to="/signin" />
+  const { api, token } = useProductContext()
+  if (!token) return <Navigate to="/signin" />
   useEffect(() => {
     api
-      .getUserInfo(tokenLS)
+      .getUserInfo(token)
       .then(setUser)
   }, [])
 

@@ -28,3 +28,15 @@
   .logo_text{
    font-family: 'Oswald', sans-serif;
   }
+
+@media (max-width: 1059px) {
+  .header {
+  padding-left: 30px;
+  padding-right: 30px;
+  }
+}    
+@media (max-width: 650px) {
+    .wr{
+      display: none;
+    }
+}

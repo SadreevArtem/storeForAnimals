@@ -1,8 +1,20 @@
-/* eslint-disable linebreak-style */
 /* eslint-disable quote-props */
 
+import { useEffect, useState } from 'react'
+import { TOKEN_LS } from '../utils/constants'
+
 export function useProducts() {
-  const tokenLS = localStorage.getItem('TOKEN') ? JSON.parse(localStorage.getItem('TOKEN')) : undefined
+  const [token, setToken] = useState('')
+  useEffect(() => {
+    const tokenFromLS = localStorage.getItem(TOKEN_LS)
+    const prepareToken = tokenFromLS ? JSON.parse(tokenFromLS) : ''
+    if (prepareToken.length) {
+      setToken(prepareToken)
+    }
+  }, [])
+  useEffect(() => {
+    window.localStorage.setItem(TOKEN_LS, JSON.stringify(token))
+  }, [token])
 
   // const [products, setProducts] = useState([])
   class API {
@@ -32,24 +44,24 @@ export function useProducts() {
       return response.json()
     }
 
-    async getUserInfo(token) {
+    async getUserInfo(t) {
       const response = await fetch(`${this.baseUrl}/v2/sm8/users/me`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'authorization': `Bearer ${token}`,
+          'authorization': `Bearer ${t}`,
         },
       })
       return response.json()
     }
 
-    async getProducts(token) {
+    async getProducts(t) {
       try {
         const response = await fetch(`${this.baseUrl}/products`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'authorization': `Bearer ${token}`,
+            'authorization': `Bearer ${t}`,
           },
         })
         return response.json()
@@ -63,7 +75,7 @@ export function useProducts() {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          'authorization': `Bearer ${tokenLS}`,
+          'authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(input),
       })
@@ -73,7 +85,8 @@ export function useProducts() {
 
   const api = new API('https://api.react-learning.ru')
   return {
-    // products,
+    token,
+    setToken,
     api,
   }
 }

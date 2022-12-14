@@ -1,26 +1,23 @@
-/* eslint-disable linebreak-style */
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
 import stylesSignIn from './styles.module.scss'
 import img from './2527488.png'
 
-/* eslint-disable linebreak-style */
 export function SignIn() {
   const [input, setInput] = useState({})
-  const tokenLS = localStorage.getItem('TOKEN') ? JSON.parse(localStorage.getItem('TOKEN')) : undefined
-  const { api } = useProductContext()
+  const { api, token, setToken } = useProductContext()
   const navigate = useNavigate()
 
   const signInHandler = (e) => {
     e.preventDefault()
     api.logIn(input)
       .then((result) => {
-        localStorage.setItem('TOKEN', JSON.stringify(result.token))
-        navigate('/')
+        setToken(result.token)
       })
+      .then(navigate('/'))
   }
-  if (tokenLS) {
+  if (token) {
     return (
       <div className={stylesSignIn.login}>
         <h2>Вы авторизованы</h2>
@@ -34,7 +31,7 @@ export function SignIn() {
   return (
     <div>
       <form onSubmit={signInHandler} name="login" className={stylesSignIn.login}>
-        <input onChange={(e) => setInput({ ...input, email: e.target.value })} type="email" required value={input.email} placeholder="Адрес электронной почты" />
+        <input onChange={(e) => setInput({ ...input, email: e.target.value })} type="email" required value={input.email || ''} placeholder="Адрес электронной почты" />
         <input
           type="password"
           required

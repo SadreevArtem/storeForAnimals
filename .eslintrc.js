@@ -27,5 +27,6 @@ module.exports = {
     'import/no-cycle': 0,
     'import/prefer-default-export': 0,
     'react/jsx-filename-extension': 0,
+    'linebreak-style': 0,
   },
 }

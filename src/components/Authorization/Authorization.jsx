@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 import { Link } from 'react-router-dom'
 
 import stylesAccount from './styles.module.scss'

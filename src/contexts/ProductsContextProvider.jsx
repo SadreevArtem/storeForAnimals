@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 import { createContext, useContext } from 'react'
 import { useProducts } from './useProducts'
 

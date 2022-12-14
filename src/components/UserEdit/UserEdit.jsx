@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
@@ -11,7 +10,7 @@ export function UserEdit() {
   const updateHandler = (e) => {
     e.preventDefault()
     api.updateUserInfo(input)
-      .then(() => alert('Информация о пользовате обновлена'))
+      .then(alert)
     navigate('/useraccount')
   }
 

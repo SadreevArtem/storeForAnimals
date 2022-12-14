@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
