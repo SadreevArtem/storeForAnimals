@@ -6,16 +6,23 @@ import img from './2527488.png'
 
 export function SignIn() {
   const [input, setInput] = useState({})
-  const { api, token, setToken } = useProductContext()
+  const { token, setToken } = useProductContext()
   const navigate = useNavigate()
+
+  const signInRequest = () => fetch('https://api.react-learning.ru/signin', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(input),
+  })
 
   const signInHandler = (e) => {
     e.preventDefault()
-    api.logIn(input)
-      .then((result) => {
-        setToken(result.token)
-      })
-      .then(navigate('/'))
+    signInRequest().then((res) => res.json()).then((result) => {
+      setToken(result.token)
+    }).then(navigate('/'))
+      .catch(alert)
   }
   if (token) {
     return (

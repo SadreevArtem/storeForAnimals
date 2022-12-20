@@ -44,17 +44,6 @@ export function useProducts() {
       return response.json()
     }
 
-    async getUserInfo(t) {
-      const response = await fetch(`${this.baseUrl}/v2/sm8/users/me`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'authorization': `Bearer ${t}`,
-        },
-      })
-      return response.json()
-    }
-
     async getProducts(t) {
       try {
         const response = await fetch(`${this.baseUrl}/products`, {
@@ -68,18 +57,6 @@ export function useProducts() {
       } catch (error) {
         throw new Error(error)
       }
-    }
-
-    async updateUserInfo(input) {
-      const response = await fetch(`${this.baseUrl}/v2/sm8/users/me`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify(input),
-      })
-      return response.json()
     }
   }
 

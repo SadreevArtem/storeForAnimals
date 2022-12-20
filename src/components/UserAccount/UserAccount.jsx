@@ -1,18 +1,27 @@
-import { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { Link, Navigate } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
+import { Loader } from '../Loader/Loader'
 import styleUserInfo from './styles.module.scss'
 
-export function UserAccount() {
-  const [user, setUser] = useState({})
-  const { api, token } = useProductContext()
-  if (!token) return <Navigate to="/signin" />
-  useEffect(() => {
-    api
-      .getUserInfo(token)
-      .then(setUser)
-  }, [])
+export const USER_INFO = ['USER_INFO']
 
+export function UserAccount() {
+  const { token } = useProductContext()
+  if (!token) return <Navigate to="/signin" />
+
+  const getInfoUser = () => fetch('https://api.react-learning.ru/v2/sm8/users/me', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+    },
+  }).then((res) => res.json()).catch(alert)
+
+  const { data: user, isLoading } = useQuery({
+    queryKey: USER_INFO,
+    queryFn: getInfoUser,
+  })
   const generateInfo = (obj) => (
     <div className={styleUserInfo.wr}>
       <div>
@@ -28,6 +37,7 @@ export function UserAccount() {
       </div>
     </div>
   )
+  if (isLoading) return <Loader />
   return (
     <div className={styleUserInfo.card}>
       <h2>Личный кабинет</h2>
