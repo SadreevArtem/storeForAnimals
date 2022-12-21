@@ -1,10 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link, Navigate } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
+import { USER_INFO } from '../../utils/constants'
 import { Loader } from '../Loader/Loader'
 import styleUserInfo from './styles.module.scss'
-
-export const USER_INFO = ['USER_INFO']
 
 export function UserAccount() {
   const { token, api } = useProductContext()

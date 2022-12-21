@@ -2,8 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
+import { USER_INFO } from '../../utils/constants'
 import { Loader } from '../Loader/Loader'
-import { USER_INFO } from '../UserAccount/UserAccount'
 import stylesUserEdit from './styles.module.scss'
 
 export function UserEdit() {

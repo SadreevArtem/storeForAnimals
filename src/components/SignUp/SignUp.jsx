@@ -2,9 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
+import { SIGN_UP } from '../../utils/constants'
 import stylesSignUp from './styles.module.scss'
-
-const SIGN_UP = ['SIGN_UP']
 
 export function SignUp() {
   const [input, setInput] = useState({})
@@ -23,7 +22,7 @@ export function SignUp() {
 
   const signUpHandler = async (e) => {
     e.preventDefault()
-    await mutateAsync
+    await mutateAsync()
     navigate('/')
   }
 

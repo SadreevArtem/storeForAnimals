@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 import { Navigate } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
+import { PRODUCTS } from '../../utils/constants'
+
 import { Loader } from '../Loader/Loader'
 import stylesIndex from './styles.module.scss'
-
-const PRODUCTS = ['PRODUCTS']
 
 export function Index() {
   const { token, api } = useProductContext()

@@ -4,8 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
 import stylesSignIn from './styles.module.scss'
 import img from './2527488.png'
-
-const USER_SIGN_IN = ['USER_SIGN_IN']
+import { USER_SIGN_IN } from '../../utils/constants'
 
 export function SignIn() {
   const [input, setInput] = useState({})
