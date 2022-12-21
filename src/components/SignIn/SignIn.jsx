@@ -1,29 +1,32 @@
 import { useState } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
 import stylesSignIn from './styles.module.scss'
 import img from './2527488.png'
 
+const USER_SIGN_IN = ['USER_SIGN_IN']
+
 export function SignIn() {
   const [input, setInput] = useState({})
-  const { token, setToken } = useProductContext()
+  const { token, api, setToken } = useProductContext()
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
+  const signInFunc = () => api.signInRequest(input)
+    .then((res) => res.json()).then((result) => setToken(result.token))
 
-  const signInRequest = () => fetch('https://api.react-learning.ru/signin', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
+  const { mutateAsync } = useMutation({
+    mutationFn: signInFunc,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: USER_SIGN_IN })
     },
-    body: JSON.stringify(input),
   })
-
-  const signInHandler = (e) => {
+  const signInHandler = async (e) => {
     e.preventDefault()
-    signInRequest().then((res) => res.json()).then((result) => {
-      setToken(result.token)
-    }).then(navigate('/'))
-      .catch(alert)
+    await mutateAsync()
+    navigate('/')
   }
+
   if (token) {
     return (
       <div className={stylesSignIn.login}>

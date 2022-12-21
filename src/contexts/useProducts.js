@@ -16,48 +16,54 @@ export function useProducts() {
     window.localStorage.setItem(TOKEN_LS, JSON.stringify(token))
   }, [token])
 
-  // const [products, setProducts] = useState([])
   class API {
     constructor(baseUrl) {
       this.baseUrl = baseUrl
     }
 
-    async signUp(input) {
-      const response = await fetch(`${this.baseUrl}/signup`, {
-        method: 'POST',
+    signUpRequest = (input) => fetch(`${this.baseUrl}/signup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(input),
+    })
+
+    getProductsRequest = () => fetch(
+      `${this.baseUrl}/products`,
+      {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(input),
-      })
-      return response.json()
-    }
+      },
+    )
 
-    async logIn(input) {
-      const response = await fetch(`${this.baseUrl}/signin`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(input),
-      })
-      return response.json()
-    }
+    updateUserRequest = (input) => fetch(`${this.baseUrl}/v2/sm8/users/me`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${token} `,
+      },
+      body: JSON.stringify(input),
+    })
 
-    async getProducts(t) {
-      try {
-        const response = await fetch(`${this.baseUrl}/products`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'authorization': `Bearer ${t}`,
-          },
-        })
-        return response.json()
-      } catch (error) {
-        throw new Error(error)
-      }
-    }
+    signInRequest = (input) => fetch(`${this.baseUrl}/signin`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(input),
+    })
+
+    getInfoUser = () => fetch(`${this.baseUrl}/v2/sm8/users/me`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${token} `,
+      },
+    })
   }
 
   const api = new API('https://api.react-learning.ru')

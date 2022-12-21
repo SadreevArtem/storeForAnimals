@@ -7,21 +7,16 @@ import styleUserInfo from './styles.module.scss'
 export const USER_INFO = ['USER_INFO']
 
 export function UserAccount() {
-  const { token } = useProductContext()
-  if (!token) return <Navigate to="/signin" />
+  const { token, api } = useProductContext()
 
-  const getInfoUser = () => fetch('https://api.react-learning.ru/v2/sm8/users/me', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      authorization: `Bearer ${token}`,
-    },
-  }).then((res) => res.json()).catch(alert)
+  if (!token) return <Navigate to="/signin" />
+  const getUserInfo = () => api.getInfoUser().then((res) => res.json())
 
   const { data: user, isLoading } = useQuery({
     queryKey: USER_INFO,
-    queryFn: getInfoUser,
+    queryFn: getUserInfo,
   })
+
   const generateInfo = (obj) => (
     <div className={styleUserInfo.wr}>
       <div>

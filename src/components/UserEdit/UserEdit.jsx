@@ -9,18 +9,11 @@ import stylesUserEdit from './styles.module.scss'
 export function UserEdit() {
   const [isFetching, setIsfetching] = useState(false)
   const [input, setInput] = useState({})
-  const { token } = useProductContext()
+  const { api } = useProductContext()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
 
-  const updateUserInfo = () => fetch('https://api.react-learning.ru/v2/sm8/users/me', {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-      authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(input),
-  })
+  const updateUserInfo = () => api.updateUserRequest(input)
 
   const { mutateAsync } = useMutation({
     mutationFn: updateUserInfo,
