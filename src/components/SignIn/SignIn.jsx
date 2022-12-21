@@ -1,22 +1,31 @@
 import { useState } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
 import stylesSignIn from './styles.module.scss'
 import img from './2527488.png'
+import { USER_SIGN_IN } from '../../utils/constants'
 
 export function SignIn() {
   const [input, setInput] = useState({})
-  const { api, token, setToken } = useProductContext()
+  const { token, api, setToken } = useProductContext()
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
+  const signInFunc = () => api.signInRequest(input)
+    .then((res) => res.json()).then((result) => setToken(result.token))
 
-  const signInHandler = (e) => {
+  const { mutateAsync } = useMutation({
+    mutationFn: signInFunc,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: USER_SIGN_IN })
+    },
+  })
+  const signInHandler = async (e) => {
     e.preventDefault()
-    api.logIn(input)
-      .then((result) => {
-        setToken(result.token)
-      })
-      .then(navigate('/'))
+    await mutateAsync()
+    navigate('/')
   }
+
   if (token) {
     return (
       <div className={stylesSignIn.login}>

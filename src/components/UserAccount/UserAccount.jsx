@@ -1,17 +1,20 @@
-import { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { Link, Navigate } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
+import { USER_INFO } from '../../utils/constants'
+import { Loader } from '../Loader/Loader'
 import styleUserInfo from './styles.module.scss'
 
 export function UserAccount() {
-  const [user, setUser] = useState({})
-  const { api, token } = useProductContext()
+  const { token, api } = useProductContext()
+
   if (!token) return <Navigate to="/signin" />
-  useEffect(() => {
-    api
-      .getUserInfo(token)
-      .then(setUser)
-  }, [])
+  const getUserInfo = () => api.getInfoUser().then((res) => res.json())
+
+  const { data: user, isLoading } = useQuery({
+    queryKey: USER_INFO,
+    queryFn: getUserInfo,
+  })
 
   const generateInfo = (obj) => (
     <div className={styleUserInfo.wr}>
@@ -28,6 +31,7 @@ export function UserAccount() {
       </div>
     </div>
   )
+  if (isLoading) return <Loader />
   return (
     <div className={styleUserInfo.card}>
       <h2>Личный кабинет</h2>

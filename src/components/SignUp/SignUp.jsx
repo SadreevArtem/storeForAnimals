@@ -1,18 +1,28 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
+import { SIGN_UP } from '../../utils/constants'
 import stylesSignUp from './styles.module.scss'
 
 export function SignUp() {
   const [input, setInput] = useState({})
   const { api } = useProductContext()
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
-  const signUpHandler = (e) => {
+  const signUpFunc = () => api.signUpRequest(input)
+
+  const { mutateAsync } = useMutation({
+    mutationFn: signUpFunc,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: SIGN_UP })
+    },
+  })
+
+  const signUpHandler = async (e) => {
     e.preventDefault()
-
-    api.signUp(input)
-      .then(alert)
+    await mutateAsync()
     navigate('/')
   }
 
