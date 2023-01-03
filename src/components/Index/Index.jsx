@@ -8,6 +8,7 @@ import stylesIndex from './styles.module.scss'
 
 export function Index() {
   const { token, api } = useProductContext()
+  console.log({ token })
   if (!token) return <Navigate to="/signin" />
 
   const id = '_id'

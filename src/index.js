@@ -9,6 +9,8 @@ import { SignIn } from './components/SignIn/SignIn'
 import { SignUp } from './components/SignUp/SignUp'
 import { UserAccount } from './components/UserAccount/UserAccount'
 import { UserEdit } from './components/UserEdit/UserEdit'
+import { ProductsContextProvider } from './contexts/ProductsContextProvider'
+import { Cart } from './components/Cart/Cart'
 
 const queryClient = new QueryClient()
 
@@ -18,6 +20,10 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <Index /> },
+      {
+        path: 'cart',
+        element: <Cart />,
+      },
       {
         path: 'signin',
         element: <SignIn />,
@@ -41,8 +47,10 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
+    <ProductsContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </ProductsContextProvider>
   </React.StrictMode>,
 )

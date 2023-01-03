@@ -1,15 +1,18 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
 import stylesSignIn from './styles.module.scss'
-import img from './2527488.png'
 import { USER_SIGN_IN } from '../../utils/constants'
 
 export function SignIn() {
   const [input, setInput] = useState({})
   const { token, api, setToken } = useProductContext()
   const navigate = useNavigate()
+  useEffect(() => {
+    if (token) navigate('/')
+  }, [token])
+  console.log({ token })
   const queryClient = useQueryClient()
   const signInFunc = () => api.signInRequest(input)
     .then((res) => res.json()).then((result) => setToken(result.token))
@@ -23,20 +26,9 @@ export function SignIn() {
   const signInHandler = async (e) => {
     e.preventDefault()
     await mutateAsync()
-    navigate('/')
+    console.log('32242')
   }
 
-  if (token) {
-    return (
-      <div className={stylesSignIn.login}>
-        <h2>Вы авторизованы</h2>
-        <img src={img} alt="Dog" />
-        <Link to="/">
-          <button type="button">на главную</button>
-        </Link>
-      </div>
-    )
-  }
   return (
     <div>
       <form onSubmit={signInHandler} name="login" className={stylesSignIn.login}>
