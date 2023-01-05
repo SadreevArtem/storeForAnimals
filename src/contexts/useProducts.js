@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable quote-props */
 
 import { useEffect, useState } from 'react'
@@ -64,6 +65,16 @@ export function useProducts() {
         authorization: `Bearer ${token} `,
       },
     })
+
+    getProductsByIds(ids) {
+      return Promise.all(ids.map((id) => fetch(`https://api.react-learning.ru/products/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${token} `,
+        },
+      }).then((res) => res.json())))
+    }
   }
 
   const api = new API('https://api.react-learning.ru')

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { Provider } from 'react-redux'
 import App from './App'
 import { Index } from './components/Index/Index'
 import { SignIn } from './components/SignIn/SignIn'
@@ -11,6 +12,7 @@ import { UserAccount } from './components/UserAccount/UserAccount'
 import { UserEdit } from './components/UserEdit/UserEdit'
 import { ProductsContextProvider } from './contexts/ProductsContextProvider'
 import { Cart } from './components/Cart/Cart'
+import { store } from './redux/store'
 
 const queryClient = new QueryClient()
 
@@ -47,10 +49,12 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
-    <ProductsContextProvider>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-      </QueryClientProvider>
-    </ProductsContextProvider>
+    <Provider store={store}>
+      <ProductsContextProvider>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+      </ProductsContextProvider>
+    </Provider>
   </React.StrictMode>,
 )

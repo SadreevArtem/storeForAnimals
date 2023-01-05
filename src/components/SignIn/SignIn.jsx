@@ -12,7 +12,7 @@ export function SignIn() {
   useEffect(() => {
     if (token) navigate('/')
   }, [token])
-  console.log({ token })
+
   const queryClient = useQueryClient()
   const signInFunc = () => api.signInRequest(input)
     .then((res) => res.json()).then((result) => setToken(result.token))
