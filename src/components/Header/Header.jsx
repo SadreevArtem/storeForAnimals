@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import stylesHeader from './styles.module.scss'
 import dogLogo from './new_logo.png'
 import { Authorization } from '../Authorization/Authorization'
+import { SearchBar } from '../SearchBar/SearchBar'
 
 export function Header() {
   return (
@@ -12,9 +13,7 @@ export function Header() {
           <span className={stylesHeader.span}>BOBIK KING</span>
         </div>
       </Link>
-      <div className="search_bar">
-        <input type="text" className={stylesHeader.input} placeholder="🔎 Search..." />
-      </div>
+      <SearchBar />
       <div className="link_container">
         <Authorization />
       </div>

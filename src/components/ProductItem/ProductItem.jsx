@@ -3,11 +3,11 @@ import { addItemCartAC } from '../../redux/actionsCreators/cartAC'
 import stylesIndex from './styles.module.scss'
 
 export function ProductItem({
-  _id: id, pictures, name, discount, price, tags, wight,
+  _id: id, pictures, name, discount, price, tags, wight, stock,
 }) {
   const dispatch = useDispatch()
   const addItemCartHandler = () => {
-    dispatch(addItemCartAC(id, name, pictures, price, discount))
+    dispatch(addItemCartAC(id, name, pictures, price, discount, stock))
   }
   const discountFunc = (p, discont) => Math.round((p - p * discont * 0.01) / 100) * 100
   return (
@@ -31,7 +31,7 @@ export function ProductItem({
             <p className={stylesIndex.p}>{wight}</p>
           </div>
           <div className={stylesIndex.btn}>
-            <button onClick={() => addItemCartHandler(id, name, pictures, price, discount)} className={stylesIndex.card_button} type="button">в корзину</button>
+            <button onClick={() => addItemCartHandler(id, name, pictures, price, discount, stock)} className={stylesIndex.card_button} type="button">в корзину</button>
           </div>
           <div className={discount ? stylesIndex.discount : 'hidden'}>
             -

@@ -13,6 +13,7 @@ import { UserEdit } from './components/UserEdit/UserEdit'
 import { ProductsContextProvider } from './contexts/ProductsContextProvider'
 import { Cart } from './components/Cart/Cart'
 import { store } from './redux/store'
+import { FilterContextProvider } from './contexts/FilterContext/FilterContextProvider'
 
 const queryClient = new QueryClient()
 
@@ -52,7 +53,9 @@ root.render(
     <Provider store={store}>
       <ProductsContextProvider>
         <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
+          <FilterContextProvider>
+            <RouterProvider router={router} />
+          </FilterContextProvider>
         </QueryClientProvider>
       </ProductsContextProvider>
     </Provider>

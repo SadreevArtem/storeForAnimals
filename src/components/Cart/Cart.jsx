@@ -16,6 +16,7 @@ export function Cart() {
   if (isLoading) return <Loader />
   if (isError) return <div>Error</div>
   console.log(products)
+  console.log({ cart })
 
   const id = '_id'
   const dispatch = useDispatch()
@@ -24,7 +25,7 @@ export function Cart() {
     navigate('/')
   }
 
-  if (!products.length) {
+  if (!cart.length) {
     return (
       <div className={stylesCart.login}>
         <img src={img} alt="Dog" />
@@ -39,9 +40,9 @@ export function Cart() {
 
   const cartSym = cart.map((el) => {
     if (el.discount) {
-      return Math.round((el.price - el.price * el.discount * 0.01) / 100) * 100
+      return Math.round((el.price - el.price * el.discount * 0.01) / 100) * 100 * el.counter
     }
-    return el.price
+    return el.price * el.counter
   })
   console.log({ cartSym })
   return (

@@ -41,6 +41,17 @@ export function useProducts() {
       },
     )
 
+    getAllProducts = (filters) => fetch(
+      `${this.baseUrl}/products/search?${new URLSearchParams(filters).toString()}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${token}`,
+        },
+      },
+    )
+
     updateUserRequest = (input) => fetch(`${this.baseUrl}/v2/sm8/users/me`, {
       method: 'PATCH',
       headers: {

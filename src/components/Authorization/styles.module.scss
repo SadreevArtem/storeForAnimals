@@ -6,8 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
- 
-  
+  position: relative;
 }
 
 .wrLink{
@@ -25,4 +24,14 @@
   border-radius: 20px;
   padding: 6px 20px; 
 }
+}
+.cartSticker{
+  text-align: center;
+  background: #ff8720;
+  border-radius: 50%;
+  width: 25px;
+  color: #502314;
+  position: absolute;
+  top:-15px;
+  right: 120px;
 }
