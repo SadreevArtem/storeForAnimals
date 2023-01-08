@@ -1,11 +1,9 @@
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { useProductContext } from '../../contexts/ProductsContextProvider'
-
 import stylesAccount from './styles.module.scss'
 
 export function Authorization() {
-  const { token } = useProductContext()
+  const token = useSelector((store) => store.token)
   const cart = useSelector((store) => store.cart)
   if (token) {
     return (

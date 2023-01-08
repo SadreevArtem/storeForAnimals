@@ -1,4 +1,3 @@
-export const TOKEN_LS = 'TOKEN'
 export const USER_SIGN_IN = ['USER_SIGN_IN']
 export const PRODUCTS = ['PRODUCTS']
 export const SIGN_UP = ['SIGN_UP']

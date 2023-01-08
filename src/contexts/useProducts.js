@@ -1,21 +1,10 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable quote-props */
 
-import { useEffect, useState } from 'react'
-import { TOKEN_LS } from '../utils/constants'
+import { useSelector } from 'react-redux'
 
 export function useProducts() {
-  const [token, setToken] = useState('')
-  useEffect(() => {
-    const tokenFromLS = localStorage.getItem(TOKEN_LS)
-    const prepareToken = tokenFromLS ? JSON.parse(tokenFromLS) : ''
-    if (prepareToken.length) {
-      setToken(prepareToken)
-    }
-  }, [])
-  useEffect(() => {
-    window.localStorage.setItem(TOKEN_LS, JSON.stringify(token))
-  }, [token])
+  const token = useSelector((store) => store.token)
 
   class API {
     constructor(baseUrl) {
@@ -90,8 +79,6 @@ export function useProducts() {
 
   const api = new API('https://api.react-learning.ru')
   return {
-    token,
-    setToken,
     api,
   }
 }

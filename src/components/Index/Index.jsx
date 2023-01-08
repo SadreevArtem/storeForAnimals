@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { Navigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
 import { PRODUCTS } from '../../utils/constants'
 import { useFilterContextData } from '../../contexts/FilterContext/FilterContextProvider'
@@ -11,7 +12,8 @@ export const getProductsQueryKey = (filters) => PRODUCTS.concat(Object.values(fi
 
 export function Index() {
   const filters = useFilterContextData()
-  const { token, api } = useProductContext()
+  const token = useSelector((store) => store.token)
+  const { api } = useProductContext()
   if (!token) return <Navigate to="/signin" />
   console.log(token)
   console.log(filters)
