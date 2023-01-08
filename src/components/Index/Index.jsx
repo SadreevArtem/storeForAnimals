@@ -26,6 +26,15 @@ export function Index() {
   console.log(data)
 
   if (isLoading) return <Loader />
+  if (!data.length) {
+    return (
+      <div>
+        {/* <img src={img} alt="Dog" /> */}
+        <h2>Странно, но ничего нет</h2>
+        <p>К сожалению, по вашему запросу ничего не найдено. Попробуйте изменить запрос.</p>
+      </div>
+    )
+  }
   return (
     <div className={stylesIndex.wr}>
       {

@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
 import stylesSignIn from './styles.module.scss'
 import { USER_SIGN_IN } from '../../utils/constants'
+import { getTokenAC } from '../../redux/actionsCreators/tokenAC'
 
 export function SignIn() {
   const [input, setInput] = useState({})
@@ -12,6 +14,7 @@ export function SignIn() {
   useEffect(() => {
     if (token) navigate('/')
   }, [token])
+  const dispatch = useDispatch()
 
   const queryClient = useQueryClient()
   const signInFunc = () => api.signInRequest(input)
@@ -26,6 +29,7 @@ export function SignIn() {
   const signInHandler = async (e) => {
     e.preventDefault()
     await mutateAsync()
+    dispatch(getTokenAC(input))
     console.log('32242')
   }
 
