@@ -40,9 +40,10 @@ export function Cart() {
 
   const cartSym = cart.map((el) => {
     if (el.discount) {
-      return Math.round((el.price - el.price * el.discount * 0.01) / 100) * 100 * el.counter
+      return Math.round((el.price - el.price
+         * el.discount * 0.01) / 100) * 100 * el.counter * (el.selected ? 1 : 0)
     }
-    return el.price * el.counter
+    return el.price * el.counter * (el.selected ? 1 : 0)
   })
   console.log({ cartSym })
   return (

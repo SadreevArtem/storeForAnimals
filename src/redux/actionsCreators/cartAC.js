@@ -1,5 +1,6 @@
 import {
-  ADD_ITEM_CART, CLEAR_ITEMS, DECREASE_COUNT_CART, DELETE_ITEM_CART, INCREASE_COUNT_CART,
+  ADD_ITEM_CART, CHANGE_STATUS_SELECTED,
+  CLEAR_ITEMS, DECREASE_COUNT_CART, DELETE_ITEM_CART, INCREASE_COUNT_CART,
 } from '../types/cartTypes'
 
 export const addItemCartAC = (id, name, pictures, price, discount, stock) => ({
@@ -12,8 +13,15 @@ export const addItemCartAC = (id, name, pictures, price, discount, stock) => ({
     discount,
     stock,
     counter: 1,
+    selected: true,
   },
 })
+
+export const changeStatusSelectedAC = (id) => ({
+  type: CHANGE_STATUS_SELECTED,
+  payload: id,
+})
+
 export const increaseItemCartAC = (id) => ({
   type: INCREASE_COUNT_CART,
   payload: id,

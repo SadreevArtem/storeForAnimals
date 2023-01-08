@@ -1,9 +1,11 @@
 import { useDispatch } from 'react-redux'
-import { decreaseItemCartAC, deleteItemCartAC, increaseItemCartAC } from '../../redux/actionsCreators/cartAC'
+import {
+  changeStatusSelectedAC, decreaseItemCartAC, deleteItemCartAC, increaseItemCartAC,
+} from '../../redux/actionsCreators/cartAC'
 import stylesIndex from './styles.module.scss'
 
 export function CartItem({
-  pictures, name, discount, price, stock, id, counter,
+  pictures, name, discount, price, stock, id, selected, counter,
 }) {
   const dispatch = useDispatch()
 
@@ -12,6 +14,9 @@ export function CartItem({
   }
   const decreaseHandler = () => {
     dispatch(decreaseItemCartAC(id))
+  }
+  const changeStatusHandler = () => {
+    dispatch(changeStatusSelectedAC(id))
   }
 
   const deleteHandler = () => {
@@ -22,6 +27,9 @@ export function CartItem({
     <div>
       <div>
         <div className={stylesIndex.card_container}>
+          <div className={stylesIndex.chbx_wr}>
+            <input onClick={changeStatusHandler} className={stylesIndex.chbx} type="checkbox" checked={selected} />
+          </div>
           <div className={stylesIndex.imgWr}>
             <img className={stylesIndex.img} src={pictures} alt="" />
           </div>
