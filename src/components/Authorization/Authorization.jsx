@@ -1,10 +1,20 @@
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import { clearCart } from '../../redux/slices/cartSlice/cartSlice'
+import { removeToken } from '../../redux/slices/tokenSlice/tokenSlice'
 import stylesAccount from './styles.module.scss'
 
 export function Authorization() {
-  const token = useSelector((store) => store.token)
+  const token = useSelector((store) => store.token.value)
   const cart = useSelector((store) => store.cart)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const logOutFunc = () => {
+    dispatch(removeToken())
+    dispatch(clearCart())
+    navigate('/signin')
+  }
+
   if (token) {
     return (
       <div className={stylesAccount.wr}>
@@ -18,6 +28,9 @@ export function Authorization() {
             <button type="button">Аккаунт</button>
           </div>
         </Link>
+        <div className={stylesAccount.wrLink}>
+          <button onClick={logOutFunc} type="button">Выйти</button>
+        </div>
         <div className={cart.length ? stylesAccount.cartSticker : 'hidden'}>
           {cart.length}
         </div>

@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { addItemCartAC } from '../../redux/actionsCreators/cartAC'
+import { addItemCart } from '../../redux/slices/cartSlice/cartSlice'
 import stylesIndex from './styles.module.scss'
 
 export function ProductItem({
@@ -7,7 +7,7 @@ export function ProductItem({
 }) {
   const dispatch = useDispatch()
   const addItemCartHandler = () => {
-    dispatch(addItemCartAC(id, name, pictures, price, discount, stock))
+    dispatch(addItemCart(id, name, pictures, price, discount, stock))
   }
   const discountFunc = (p, discont) => Math.round((p - p * discont * 0.01) / 100) * 100
   return (

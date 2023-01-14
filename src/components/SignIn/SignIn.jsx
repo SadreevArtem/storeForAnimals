@@ -1,24 +1,43 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import stylesSignIn from './styles.module.scss'
-import { getTokenAC } from '../../redux/actionsCreators/tokenAC'
+import { useProductContext } from '../../contexts/ProductsContextProvider'
+import { USER_SIGN_IN } from '../../utils/constants'
+import { setToken } from '../../redux/slices/tokenSlice/tokenSlice'
 
 export function SignIn() {
   const [input, setInput] = useState({})
-  const token = useSelector((store) => store.token)
+  const token = useSelector((store) => store.token.value) || ''
+  console.log({ token })
+  const { api } = useProductContext()
   const navigate = useNavigate()
   useEffect(() => {
     if (token) navigate('/')
   }, [token])
   const dispatch = useDispatch()
 
+  const queryClient = useQueryClient()
+  const signInFunc = () => api.signInRequest(input)
+    .then((res) => res.json())
+    .then((result) => {
+      console.log(result.token)
+      dispatch(setToken(result.token))
+    })
+
+  const { mutateAsync } = useMutation({
+    mutationFn: signInFunc,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: USER_SIGN_IN })
+    },
+  })
+
   const signInHandler = async (e) => {
     e.preventDefault()
-    dispatch(getTokenAC(input))
-    console.log('32242')
+    await mutateAsync()
+    navigate('/')
   }
-
   return (
     <div>
       <form onSubmit={signInHandler} name="login" className={stylesSignIn.login}>

@@ -8,7 +8,7 @@ import styleUserInfo from './styles.module.scss'
 
 export function UserAccount() {
   const { api } = useProductContext()
-  const token = useSelector((store) => store.token)
+  const token = useSelector((store) => store.token.value)
   if (!token) return <Navigate to="/signin" />
   const getUserInfo = () => api.getInfoUser().then((res) => res.json())
 

@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux'
 import {
-  changeStatusSelectedAC, decreaseItemCartAC, deleteItemCartAC, increaseItemCartAC,
-} from '../../redux/actionsCreators/cartAC'
+  changeStatusSelected, decreaseCountCart, deleteItemCart, increaseCountCart,
+} from '../../redux/slices/cartSlice/cartSlice'
 import stylesIndex from './styles.module.scss'
 
 export function CartItem({
@@ -10,17 +10,17 @@ export function CartItem({
   const dispatch = useDispatch()
 
   const increaseHandler = () => {
-    dispatch(increaseItemCartAC(id))
+    dispatch(increaseCountCart(id))
   }
   const decreaseHandler = () => {
-    dispatch(decreaseItemCartAC(id))
+    dispatch(decreaseCountCart(id))
   }
   const changeStatusHandler = () => {
-    dispatch(changeStatusSelectedAC(id))
+    dispatch(changeStatusSelected(id))
   }
 
   const deleteHandler = () => {
-    dispatch(deleteItemCartAC(id))
+    dispatch(deleteItemCart(id))
   }
   const discountFunc = (p, discont) => Math.round((p - p * discont * 0.01) / 100) * 100
   return (

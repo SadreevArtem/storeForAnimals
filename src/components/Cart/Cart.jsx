@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
-import { clearCartAC } from '../../redux/actionsCreators/cartAC'
+import { clearCart } from '../../redux/slices/cartSlice/cartSlice'
 import { CartItem } from '../CartItem/CartItem'
 import { Loader } from '../Loader/Loader'
 import img from './2527488.png'
@@ -21,7 +21,7 @@ export function Cart() {
   const id = '_id'
   const dispatch = useDispatch()
   const clearCartHandler = () => {
-    dispatch(clearCartAC())
+    dispatch(clearCart())
     navigate('/')
   }
 

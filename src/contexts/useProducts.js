@@ -4,7 +4,7 @@
 import { useSelector } from 'react-redux'
 
 export function useProducts() {
-  const token = useSelector((store) => store.token)
+  const token = useSelector((store) => store.token.value)
 
   class API {
     constructor(baseUrl) {

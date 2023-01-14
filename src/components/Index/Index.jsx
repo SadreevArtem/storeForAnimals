@@ -12,7 +12,7 @@ export const getProductsQueryKey = (filters) => PRODUCTS.concat(Object.values(fi
 
 export function Index() {
   const filters = useFilterContextData()
-  const token = useSelector((store) => store.token)
+  const token = useSelector((store) => store.token.value)
   const { api } = useProductContext()
   if (!token) return <Navigate to="/signin" />
   console.log(token)

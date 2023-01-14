@@ -1,12 +1,15 @@
-import { applyMiddleware, createStore } from 'redux'
-import { composeWithDevTools } from 'redux-devtools-extension'
-import thunk from 'redux-thunk'
-import { getInitialState, REDUX_LS_KEY } from './initState'
-import { rootReducer } from './reducers/rootReducer'
+import { configureStore } from '@reduxjs/toolkit'
+import { REDUX_LS_KEY } from './initState'
+import { cartReducer } from './slices/cartSlice/cartSlice'
+import { tokenReducer } from './slices/tokenSlice/tokenSlice'
 
-export const store = createStore(rootReducer, getInitialState(), composeWithDevTools(
-  applyMiddleware(thunk),
-))
+export const store = configureStore({
+  reducer: {
+    token: tokenReducer,
+    cart: cartReducer,
+  },
+})
+console.log(store.getState())
 
 store.subscribe(() => {
   localStorage.setItem(REDUX_LS_KEY, JSON.stringify(store.getState()))
