@@ -71,6 +71,12 @@ const cartSlice = createSlice({
       })
     },
     changeAllSelectStatus(state) {
+      if (state.every((el) => el.selected === true)) {
+        return state.map((item) => ({
+          ...item,
+          selected: false,
+        }))
+      }
       return state.map((item) => ({
         ...item,
         selected: true,

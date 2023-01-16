@@ -60,7 +60,7 @@ export function Cart() {
     <div className={stylesCart.wr}>
       <div>
         <div className={stylesCart.selectAll}>
-          <input type="checkbox" id="chbx" onChange={changeAllSelectHandler} defaultChecked className={stylesCart.chbx} />
+          <input type="checkbox" id="chbx" onChange={changeAllSelectHandler} checked={!cart.some((el) => el.selected !== true)} defaultChecked className={stylesCart.chbx} />
           <label htmlFor="chbx">
             Выбрать все
           </label>

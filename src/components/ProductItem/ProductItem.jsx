@@ -18,7 +18,7 @@ export function ProductItem({
             <img className={stylesIndex.img} src={pictures} alt="" />
           </div>
           <div>
-            <h4>{name}</h4>
+            <h4>{`${name.slice(0, 25)}...`}</h4>
             <h5 className={discount ? stylesIndex.discount_price : 'hidden'}>
               {price}
               ₽

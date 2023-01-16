@@ -34,7 +34,7 @@
   padding-top: 10px;
 }
 .img{
-  height: 150px;
+  max-height: 150px;
   max-width: 220px;
 }
 .btn{
@@ -63,11 +63,17 @@
 }
 .discount_price{
   text-decoration: line-through;
-  margin: 0px;
+  margin: 5px;
+  font-size: small;
 }
 .redPrice{
   color: red;
+  font-size: large;
 }
 .p{
-  margin: 0px;
+  margin: 5px;
+  font-size: small;
+}
+h4 { 
+  margin: 5px;
 }
