@@ -70,6 +70,12 @@ const cartSlice = createSlice({
         return item
       })
     },
+    changeAllSelectStatus(state) {
+      return state.map((item) => ({
+        ...item,
+        selected: true,
+      }))
+    },
     clearCart() {
       return []
     },
@@ -78,6 +84,6 @@ const cartSlice = createSlice({
 
 export const {
   clearCart, decreaseCountCart, increaseCountCart,
-  deleteItemCart, changeStatusSelected, addItemCart,
+  deleteItemCart, changeStatusSelected, addItemCart, changeAllSelectStatus,
 } = cartSlice.actions
 export const cartReducer = cartSlice.reducer

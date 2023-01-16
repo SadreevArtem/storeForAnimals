@@ -15,8 +15,7 @@ export function Index() {
   const token = useSelector((store) => store.token.value)
   const { api } = useProductContext()
   if (!token) return <Navigate to="/signin" />
-  console.log(token)
-  console.log(filters)
+
   const getProductsFn = (filter) => api.getAllProducts(filter).then((res) => res.json())
   const { data, isLoading } = useQuery({
     queryKey: getProductsQueryKey(filters),
@@ -25,7 +24,6 @@ export function Index() {
     }),
   })
   const id = '_id'
-  console.log(data)
 
   if (isLoading) return <Loader />
   if (!data.length) {

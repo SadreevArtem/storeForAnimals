@@ -9,7 +9,6 @@ export const store = configureStore({
     cart: cartReducer,
   },
 })
-console.log(store.getState())
 
 store.subscribe(() => {
   localStorage.setItem(REDUX_LS_KEY, JSON.stringify(store.getState()))

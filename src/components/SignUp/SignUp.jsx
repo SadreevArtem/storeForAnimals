@@ -12,6 +12,13 @@ export function SignUp() {
   const queryClient = useQueryClient()
 
   const signUpFunc = () => api.signUpRequest(input)
+    .then((res) => {
+      if (res.status >= 200 && res.status < 300) {
+        return res.json()
+      }
+      throw Error('Ошибка регистрации')
+    })
+    .catch(alert)
 
   const { mutateAsync } = useMutation({
     mutationFn: signUpFunc,

@@ -1,8 +1,9 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import { useQuery } from '@tanstack/react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
-import { clearCart } from '../../redux/slices/cartSlice/cartSlice'
+import { changeAllSelectStatus, clearCart } from '../../redux/slices/cartSlice/cartSlice'
 import { CartItem } from '../CartItem/CartItem'
 import { Loader } from '../Loader/Loader'
 import img from './2527488.png'
@@ -12,17 +13,25 @@ export function Cart() {
   const { api } = useProductContext()
   const cart = useSelector((store) => store.cart)
   const navigate = useNavigate()
-  const { data: products, isLoading, isError } = useQuery({ queryKey: ['cart'], queryFn: () => api.getProductsByIds(cart.map((product) => product.id)) })
+  const getCartItemsQueryKey = (cartItemsId) => ['cart'].concat(cartItemsId)
+  const {
+    data: products, isLoading, isError,
+  } = useQuery({
+    queryKey: getCartItemsQueryKey(cart.map((product) => product.id)),
+    queryFn: () => api.getProductsByIds(cart.map((product) => product.id)),
+  })
   if (isLoading) return <Loader />
   if (isError) return <div>Error</div>
-  console.log(products)
+  console.log(products.length)
   console.log({ cart })
 
-  const id = '_id'
   const dispatch = useDispatch()
   const clearCartHandler = () => {
     dispatch(clearCart())
     navigate('/')
+  }
+  const changeAllSelectHandler = () => {
+    dispatch(changeAllSelectStatus())
   }
 
   if (!cart.length) {
@@ -47,11 +56,20 @@ export function Cart() {
   })
   console.log({ cartSym })
   return (
+
     <div className={stylesCart.wr}>
-      <div className={stylesCart.wr_aside}>
-        {
-        cart.map((el) => <CartItem key={el[id]} {...el} />)
+      <div>
+        <div className={stylesCart.selectAll}>
+          <input type="checkbox" id="chbx" onChange={changeAllSelectHandler} defaultChecked className={stylesCart.chbx} />
+          <label htmlFor="chbx">
+            Выбрать все
+          </label>
+        </div>
+        <div className={stylesCart.wr_aside}>
+          {
+        cart.map((el) => <CartItem key={el.id} {...el} />)
         }
+        </div>
       </div>
       <div className={stylesCart.confirm}>
         <h3>
@@ -59,7 +77,7 @@ export function Cart() {
         </h3>
         <h3>
           Итого:
-          {cart.length}
+          {cart.filter((el) => el.selected === true).length}
           {' '}
           товара(ов)
         </h3>

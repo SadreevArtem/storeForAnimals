@@ -28,7 +28,7 @@ export function CartItem({
       <div>
         <div className={stylesIndex.card_container}>
           <div className={stylesIndex.chbx_wr}>
-            <input onClick={changeStatusHandler} className={stylesIndex.chbx} type="checkbox" checked={selected} />
+            <input onChange={changeStatusHandler} className={stylesIndex.chbx} type="checkbox" checked={selected} />
           </div>
           <div className={stylesIndex.imgWr}>
             <img className={stylesIndex.img} src={pictures} alt="" />

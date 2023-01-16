@@ -10,7 +10,6 @@ import { setToken } from '../../redux/slices/tokenSlice/tokenSlice'
 export function SignIn() {
   const [input, setInput] = useState({})
   const token = useSelector((store) => store.token.value) || ''
-  console.log({ token })
   const { api } = useProductContext()
   const navigate = useNavigate()
   useEffect(() => {
@@ -20,11 +19,14 @@ export function SignIn() {
 
   const queryClient = useQueryClient()
   const signInFunc = () => api.signInRequest(input)
-    .then((res) => res.json())
+    .then((res) => {
+      if (res.status !== 200) { throw Error('Ошибка авторизации') }
+      return res.json()
+    })
     .then((result) => {
-      console.log(result.token)
       dispatch(setToken(result.token))
     })
+    .catch(alert)
 
   const { mutateAsync } = useMutation({
     mutationFn: signInFunc,
