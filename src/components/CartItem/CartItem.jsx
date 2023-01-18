@@ -1,13 +1,15 @@
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   changeStatusSelected, decreaseCountCart, deleteItemCart, increaseCountCart,
 } from '../../redux/slices/cartSlice/cartSlice'
 import stylesIndex from './styles.module.scss'
 
 export function CartItem({
-  pictures, name, discount, price, stock, id, selected, counter,
+  pictures, name, discount, price, stock, _id: id,
 }) {
   const dispatch = useDispatch()
+  const cart = useSelector((store) => store.cart)
+  const item = cart.find((el) => el.id === id)
 
   const increaseHandler = () => {
     dispatch(increaseCountCart(id))
@@ -28,7 +30,7 @@ export function CartItem({
       <div>
         <div className={stylesIndex.card_container}>
           <div className={stylesIndex.chbx_wr}>
-            <input onChange={changeStatusHandler} className={stylesIndex.chbx} type="checkbox" checked={selected} />
+            <input onChange={changeStatusHandler} className={stylesIndex.chbx} type="checkbox" checked={item.selected} />
           </div>
           <div className={stylesIndex.imgWr}>
             <img className={stylesIndex.img} src={pictures} alt="" />
@@ -47,9 +49,9 @@ export function CartItem({
           </div>
           <div className={stylesIndex.btn}>
             <div className={stylesIndex.wr_counter}>
-              <button onClick={decreaseHandler} disabled={counter === 1} className={stylesIndex.btn_counter} type="button">-</button>
-              <input className={stylesIndex.input} type="text" readOnly value={counter} />
-              <button onClick={increaseHandler} disabled={counter === stock} className={stylesIndex.btn_counter} type="button">+</button>
+              <button onClick={decreaseHandler} disabled={item.counter === 1} className={stylesIndex.btn_counter} type="button">-</button>
+              <input className={stylesIndex.input} type="text" readOnly value={item.counter} />
+              <button onClick={increaseHandler} disabled={item.counter === stock} className={stylesIndex.btn_counter} type="button">+</button>
             </div>
             <button onClick={deleteHandler} type="button">удалить</button>
           </div>

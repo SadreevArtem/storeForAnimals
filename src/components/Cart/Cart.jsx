@@ -13,6 +13,7 @@ export function Cart() {
   const { api } = useProductContext()
   const cart = useSelector((store) => store.cart)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const getCartItemsQueryKey = (cartItemsId) => ['cart'].concat(cartItemsId)
   const {
     data: products, isLoading, isError,
@@ -20,12 +21,10 @@ export function Cart() {
     queryKey: getCartItemsQueryKey(cart.map((product) => product.id)),
     queryFn: () => api.getProductsByIds(cart.map((product) => product.id)),
   })
+  const idn = '_id'
   if (isLoading) return <Loader />
   if (isError) return <div>Error</div>
-  console.log(products.length)
-  console.log({ cart })
 
-  const dispatch = useDispatch()
   const clearCartHandler = () => {
     dispatch(clearCart())
     navigate('/')
@@ -47,27 +46,34 @@ export function Cart() {
     )
   }
 
-  const cartSym = cart.map((el) => {
+  const array = cart.map((el) => {
+    const item = products.find((elem) => elem[idn] === el.id)
+    return {
+      ...el,
+      ...item,
+    }
+  })
+  const cartSym = array.map((el) => {
     if (el.discount) {
       return Math.round((el.price - el.price
          * el.discount * 0.01) / 100) * 100 * el.counter * (el.selected ? 1 : 0)
     }
     return el.price * el.counter * (el.selected ? 1 : 0)
   })
-  console.log({ cartSym })
+
   return (
 
     <div className={stylesCart.wr}>
       <div>
         <div className={stylesCart.selectAll}>
-          <input type="checkbox" id="chbx" onChange={changeAllSelectHandler} checked={!cart.some((el) => el.selected !== true)} defaultChecked className={stylesCart.chbx} />
+          <input type="checkbox" id="chbx" onChange={changeAllSelectHandler} checked={!cart.some((el) => el.selected !== true)} className={stylesCart.chbx} />
           <label htmlFor="chbx">
             Выбрать все
           </label>
         </div>
         <div className={stylesCart.wr_aside}>
           {
-        cart.map((el) => <CartItem key={el.id} {...el} />)
+        products.map((el) => <CartItem key={el[idn]} {...el} />)
         }
         </div>
       </div>

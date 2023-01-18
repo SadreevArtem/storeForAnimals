@@ -19,15 +19,10 @@ const cartSlice = createSlice({
           return item
         })
       },
-      prepare(id, name, pictures, price, discount, stock) {
+      prepare(id) {
         return {
           payload: {
             id,
-            name,
-            pictures,
-            price,
-            discount,
-            stock,
             counter: 1,
             selected: true,
           },
