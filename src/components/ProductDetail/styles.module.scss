@@ -1,0 +1,37 @@
+.wr {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.ImgWr{
+    width: 500px;
+    background-color: #fff;
+}
+
+.img{
+    max-width: 450px;
+    margin-left: 25px;
+}
+.wrInfo{
+    width: 500px;
+    height: 500px;
+}
+.wrList{
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+.discount_price{
+    text-decoration: line-through;
+    margin: 5px;
+    font-size: small;
+  }
+.redPrice{
+    color: red;
+    font-size: large;
+}
+.reviews{
+    margin-left: 25px;
+}

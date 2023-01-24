@@ -14,6 +14,7 @@ import { ProductsContextProvider } from './contexts/ProductsContextProvider'
 import { Cart } from './components/Cart/Cart'
 import { store } from './redux/store'
 import { FilterContextProvider } from './contexts/FilterContext/FilterContextProvider'
+import { ProductDetail } from './components/ProductDetail/ProductDetail'
 
 const queryClient = new QueryClient()
 
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <Index /> },
+      {
+        path: 'products/:id',
+        element: <ProductDetail />,
+      },
       {
         path: 'cart',
         element: <Cart />,
