@@ -1,18 +1,25 @@
 import { useQuery } from '@tanstack/react-query'
-import { useParams } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { NavLink, useParams } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
+import { addItemCart } from '../../redux/slices/cartSlice/cartSlice'
+import { PRODUCT_DETAIL } from '../../utils/constants'
 import { Loader } from '../Loader/Loader'
 import stylesProductDetail from './styles.module.scss'
 
 export function ProductDetail() {
   const { id } = useParams()
   const { api } = useProductContext()
+  const dispatch = useDispatch()
   console.log(id)
   const getProductFunc = () => api.getProductItem(id).then((res) => res.json())
   const { data, isLoading } = useQuery({
-    queryKey: ['GET_QUERY_KEY'],
+    queryKey: PRODUCT_DETAIL,
     queryFn: getProductFunc,
   })
+  const addItemCartHandler = () => {
+    dispatch(addItemCart(id))
+  }
   const discountFunc = (p, discont) => Math.round((p - p * discont * 0.01) / 100) * 100
   console.log(data)
   if (isLoading) return <Loader />
@@ -39,13 +46,17 @@ export function ProductDetail() {
             {' '}
             {data.wight}
           </h4>
+          <div className={stylesProductDetail.buttonWr}>
+            <button type="button" onClick={addItemCartHandler}>в корзину</button>
+            <button type="button">в избраное</button>
+          </div>
         </div>
         <div>
-          <p className={stylesProductDetail.reviews}>
+          <NavLink to="reviews">
             Отзывы
             {' '}
             {`(${data.reviews.length})`}
-          </p>
+          </NavLink>
         </div>
       </div>
     </div>

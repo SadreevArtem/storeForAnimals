@@ -41,6 +41,17 @@ export function useProducts() {
       },
     )
 
+    getProductReview = (id) => fetch(
+      `${this.baseUrl}/products/review/${id}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${token}`,
+        },
+      },
+    )
+
     getAllProducts = (filters) => fetch(
       `${this.baseUrl}/products/search?${new URLSearchParams(filters).toString()}`,
       {

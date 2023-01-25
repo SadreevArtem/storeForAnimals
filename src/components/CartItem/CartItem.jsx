@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 import {
   changeStatusSelected, decreaseCountCart, deleteItemCart, increaseCountCart,
 } from '../../redux/slices/cartSlice/cartSlice'
@@ -32,9 +33,11 @@ export function CartItem({
           <div className={stylesIndex.chbx_wr}>
             <input onChange={changeStatusHandler} className={stylesIndex.chbx} type="checkbox" checked={item.selected} />
           </div>
-          <div className={stylesIndex.imgWr}>
-            <img className={stylesIndex.img} src={pictures} alt="" />
-          </div>
+          <NavLink to={`../products/${id}`}>
+            <div className={stylesIndex.imgWr}>
+              <img className={stylesIndex.img} src={pictures} alt="" />
+            </div>
+          </NavLink>
           <div>
             <h4>{name}</h4>
             <h5 className={discount ? stylesIndex.discount_price : 'hidden'}>
