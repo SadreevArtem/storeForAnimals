@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { NavLink, useParams } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
 import { addItemCart } from '../../redux/slices/cartSlice/cartSlice'
+import { addItemFavorites } from '../../redux/slices/favoritesSlice/favoritesSlice'
 import { PRODUCT_DETAIL } from '../../utils/constants'
 import { Loader } from '../Loader/Loader'
 import stylesProductDetail from './styles.module.scss'
@@ -19,6 +20,9 @@ export function ProductDetail() {
   })
   const addItemCartHandler = () => {
     dispatch(addItemCart(id))
+  }
+  const favoritesHandler = () => {
+    dispatch(addItemFavorites(id))
   }
   const discountFunc = (p, discont) => Math.round((p - p * discont * 0.01) / 100) * 100
   console.log(data)
@@ -48,7 +52,7 @@ export function ProductDetail() {
           </h4>
           <div className={stylesProductDetail.buttonWr}>
             <button type="button" onClick={addItemCartHandler}>в корзину</button>
-            <button type="button">в избраное</button>
+            <button type="button" onClick={favoritesHandler}>в избраное</button>
           </div>
         </div>
         <div>
@@ -58,6 +62,14 @@ export function ProductDetail() {
             {`(${data.reviews.length})`}
           </NavLink>
         </div>
+      </div>
+      <div className={data.discount ? stylesProductDetail.discount : 'hidden'}>
+        -
+        {data.discount}
+        %
+      </div>
+      <div className={data.tags.includes('new') ? stylesProductDetail.newSticker : 'hidden'}>
+        NEW
       </div>
     </div>
   )

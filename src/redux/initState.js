@@ -5,6 +5,7 @@ export const initialState = {
     value: '',
   },
   cart: [],
+  favorites: [],
 }
 
 export const getInitialState = () => {

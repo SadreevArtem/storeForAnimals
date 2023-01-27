@@ -16,6 +16,7 @@ import { store } from './redux/store'
 import { FilterContextProvider } from './contexts/FilterContext/FilterContextProvider'
 import { ProductDetail } from './components/ProductDetail/ProductDetail'
 import { Reviews } from './components/Reviews/Reviews'
+import { Favorites } from './components/Favorites/Favorites'
 
 const queryClient = new QueryClient()
 
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: 'cart',
         element: <Cart />,
+      },
+      {
+        path: 'favorites',
+        element: <Favorites />,
       },
       {
         path: 'signin',

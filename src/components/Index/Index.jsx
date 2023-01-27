@@ -7,7 +7,6 @@ import { useFilterContextData } from '../../contexts/FilterContext/FilterContext
 import { Loader } from '../Loader/Loader'
 import { ProductItem } from '../ProductItem/ProductItem'
 import stylesIndex from './styles.module.scss'
-import img from './1161336.png'
 
 export const getProductsQueryKey = (filters) => PRODUCTS.concat(Object.values(filters))
 
@@ -41,9 +40,6 @@ export function Index() {
       {
         data.map((el) => <ProductItem key={el[id]} {...el} />)
       }
-      <div>
-        <img className={stylesIndex.chatImg} src={img} alt="chat" />
-      </div>
     </div>
 
   )

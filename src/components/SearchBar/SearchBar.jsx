@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useFilterContextMethods } from '../../contexts/FilterContext/FilterContextProvider'
 import { useDebounce } from '../../hooks/useDebounce'
+import stylesSearch from './styles.module.scss'
 
 export function SearchBar() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -20,7 +21,7 @@ export function SearchBar() {
   return (
     <form action="">
       <div>
-        <input type="text" placeholder="🔎 Search..." value={input} onChange={(e) => setInput(e.target.value)} />
+        <input className={stylesSearch.input} type="search" placeholder="🔎 Search..." value={input} onChange={(e) => setInput(e.target.value)} />
       </div>
     </form>
   )
