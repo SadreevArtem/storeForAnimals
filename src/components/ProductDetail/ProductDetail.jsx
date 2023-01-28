@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
-import { useDispatch } from 'react-redux'
+import { FaRegHeart } from 'react-icons/fa'
+import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useParams } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
 import { addItemCart } from '../../redux/slices/cartSlice/cartSlice'
@@ -11,6 +12,7 @@ import stylesProductDetail from './styles.module.scss'
 export function ProductDetail() {
   const { id } = useParams()
   const { api } = useProductContext()
+  const favorites = useSelector((store) => store.favorites)
   const dispatch = useDispatch()
   console.log(id)
   const getProductFunc = () => api.getProductItem(id).then((res) => res.json())
@@ -21,7 +23,8 @@ export function ProductDetail() {
   const addItemCartHandler = () => {
     dispatch(addItemCart(id))
   }
-  const favoritesHandler = () => {
+  const changeFavoriteHandler = (event) => {
+    event.preventDefault()
     dispatch(addItemFavorites(id))
   }
   const discountFunc = (p, discont) => Math.round((p - p * discont * 0.01) / 100) * 100
@@ -52,7 +55,6 @@ export function ProductDetail() {
           </h4>
           <div className={stylesProductDetail.buttonWr}>
             <button type="button" onClick={addItemCartHandler}>в корзину</button>
-            <button type="button" onClick={favoritesHandler}>в избраное</button>
           </div>
         </div>
         <div>
@@ -71,6 +73,11 @@ export function ProductDetail() {
       <div className={data.tags.includes('new') ? stylesProductDetail.newSticker : 'hidden'}>
         NEW
       </div>
+      <FaRegHeart
+        onClick={changeFavoriteHandler}
+        className={favorites.some((el) => el === id) ? stylesProductDetail.heart_red
+          : stylesProductDetail.heart}
+      />
     </div>
   )
 }

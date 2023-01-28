@@ -1,15 +1,18 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
+import { FaRegHeart } from 'react-icons/fa'
 import {
   changeStatusSelected, decreaseCountCart, deleteItemCart, increaseCountCart,
 } from '../../redux/slices/cartSlice/cartSlice'
 import stylesIndex from './styles.module.scss'
+import { addItemFavorites } from '../../redux/slices/favoritesSlice/favoritesSlice'
 
 export function CartItem({
   pictures, name, discount, price, stock, _id: id,
 }) {
   const dispatch = useDispatch()
   const cart = useSelector((store) => store.cart)
+  const favorites = useSelector((store) => (store.favorites))
   const item = cart.find((el) => el.id === id)
 
   const increaseHandler = () => {
@@ -21,9 +24,11 @@ export function CartItem({
   const changeStatusHandler = () => {
     dispatch(changeStatusSelected(id))
   }
-
   const deleteHandler = () => {
     dispatch(deleteItemCart(id))
+  }
+  const changeFavoriteHandler = () => {
+    dispatch(addItemFavorites(id))
   }
   const discountFunc = (p, discont) => Math.round((p - p * discont * 0.01) / 100) * 100
   return (
@@ -39,7 +44,7 @@ export function CartItem({
             </div>
           </NavLink>
           <div>
-            <h4>{name}</h4>
+            <h4>{`${name.slice(0, 25)}...`}</h4>
             <h5 className={discount ? stylesIndex.discount_price : 'hidden'}>
               {price}
               ₽
@@ -63,6 +68,11 @@ export function CartItem({
             {discount}
             %
           </div>
+          <FaRegHeart
+            onClick={changeFavoriteHandler}
+            className={favorites.some((el) => el === id) ? stylesIndex.heart_red
+              : stylesIndex.heart}
+          />
         </div>
       </div>
     </div>

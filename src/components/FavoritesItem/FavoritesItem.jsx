@@ -1,9 +1,15 @@
+import { useDispatch } from 'react-redux'
 import { NavLink } from 'react-router-dom'
+import { addItemFavorites } from '../../redux/slices/favoritesSlice/favoritesSlice'
 import stylesFavoritesItem from './styles.module.scss'
 
 export function FavoritesItem({
   pictures, name, discount, price, _id: id,
 }) {
+  const dispatch = useDispatch()
+  const deleteFavoriteHandler = () => {
+    dispatch(addItemFavorites(id))
+  }
   const discountFunc = (p, discont) => Math.round((p - p * discont * 0.01) / 100) * 100
   return (
     <div>
@@ -27,7 +33,7 @@ export function FavoritesItem({
             </h4>
           </div>
           <div className={stylesFavoritesItem.btn}>
-            <button type="button">удалить</button>
+            <button onClick={deleteFavoriteHandler} type="button">удалить</button>
           </div>
           <div className={discount ? stylesFavoritesItem.discount : 'hidden'}>
             -

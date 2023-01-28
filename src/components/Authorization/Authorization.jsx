@@ -1,8 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { FaHeart, FaShoppingCart } from 'react-icons/fa'
+import { ImExit, ImUser } from 'react-icons/im'
 import { removeToken } from '../../redux/slices/tokenSlice/tokenSlice'
+import { clearCart } from '../../redux/slices/cartSlice/cartSlice'
 import stylesAccount from './styles.module.scss'
+import { clearFavorites } from '../../redux/slices/favoritesSlice/favoritesSlice'
 
 export function Authorization() {
   const token = useSelector((store) => store.token.value)
@@ -12,6 +15,8 @@ export function Authorization() {
   const dispatch = useDispatch()
   const logOutFunc = () => {
     dispatch(removeToken())
+    dispatch(clearCart())
+    dispatch(clearFavorites())
     navigate('/signin')
   }
 
@@ -21,24 +26,28 @@ export function Authorization() {
         <Link to="/cart">
           <div className={stylesAccount.wrLink}>
             <button type="button">
-              <FaShoppingCart className={stylesAccount.cart} />
+              <FaShoppingCart className={stylesAccount.icons} />
             </button>
           </div>
         </Link>
         <Link to="/favorites">
           <div className={stylesAccount.wrLink}>
             <button type="button">
-              <FaHeart className={stylesAccount.favorites} />
+              <FaHeart className={stylesAccount.icons} />
             </button>
           </div>
         </Link>
         <Link to="/useraccount">
           <div className={stylesAccount.wrLink}>
-            <button type="button">Аккаунт</button>
+            <button type="button">
+              <ImUser className={stylesAccount.icons} />
+            </button>
           </div>
         </Link>
         <div className={stylesAccount.wrLink}>
-          <button onClick={logOutFunc} type="button">Выйти</button>
+          <button onClick={logOutFunc} type="button">
+            <ImExit className={stylesAccount.icons} />
+          </button>
         </div>
         <div className={cart.length ? stylesAccount.cartSticker : 'hidden'}>
           {cart.length}

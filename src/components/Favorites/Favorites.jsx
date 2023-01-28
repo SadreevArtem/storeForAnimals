@@ -35,6 +35,7 @@ export function Favorites() {
 
     <div className={stylesFavorites.wr}>
       <div>
+        <h2>Избраные товары</h2>
         <div className={stylesFavorites.wr_aside}>
           {
         products.map((el) => <FavoritesItem key={el[idn]} {...el} />)
