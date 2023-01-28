@@ -13,6 +13,7 @@ export function ProductDetail() {
   const { id } = useParams()
   const { api } = useProductContext()
   const favorites = useSelector((store) => store.favorites)
+  const cart = useSelector((store) => store.cart)
   const dispatch = useDispatch()
   console.log(id)
   const getProductFunc = () => api.getProductItem(id).then((res) => res.json())
@@ -78,6 +79,9 @@ export function ProductDetail() {
         className={favorites.some((el) => el === id) ? stylesProductDetail.heart_red
           : stylesProductDetail.heart}
       />
+      <div className={cart.some((el) => el.id === id) ? stylesProductDetail.cartSticker : 'hidden'}>
+        {cart.find((el) => el.id === id) ? cart.find((el) => el.id === id).counter : ''}
+      </div>
     </div>
   )
 }

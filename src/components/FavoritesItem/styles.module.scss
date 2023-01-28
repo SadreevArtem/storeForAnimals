@@ -22,8 +22,9 @@
   max-width: 220px;
 }
 .btn{
-  
   display: flex;
+  flex-direction: column;
+  gap: 10px;
   align-items: center;
   justify-content: center;
 }
@@ -77,4 +78,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.cartSticker{
+  text-align: center;
+  border-radius: 50%;
+  border: 2px solid #502314;
+  width: 25px;
+  color: #502314;
+  position: absolute;
+  top: 60px;
+  right: 10px;
 }
