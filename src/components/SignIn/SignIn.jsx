@@ -1,14 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import {
+  ErrorMessage, Field,
+  Form, Formik,
+} from 'formik'
+import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import stylesSignIn from './styles.module.scss'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
-import { USER_SIGN_IN } from '../../utils/constants'
+import { REQUIRED_ERROR_MESSAGE, USER_SIGN_IN } from '../../utils/constants'
 import { setToken } from '../../redux/slices/tokenSlice/tokenSlice'
+import { Loader } from '../Loader/Loader'
 
 export function SignIn() {
-  const [input, setInput] = useState({})
   const token = useSelector((store) => store.token.value) || ''
   const { api } = useProductContext()
   const navigate = useNavigate()
@@ -16,9 +21,8 @@ export function SignIn() {
     if (token) navigate('/')
   }, [token])
   const dispatch = useDispatch()
-
   const queryClient = useQueryClient()
-  const signInFunc = () => api.signInRequest(input)
+  const signInFunc = (input) => api.signInRequest(input)
     .then((res) => {
       if (res.status !== 200) { throw Error('Ошибка авторизации') }
       return res.json()
@@ -28,37 +32,45 @@ export function SignIn() {
     })
     .catch(alert)
 
-  const { mutateAsync } = useMutation({
+  const { mutateAsync, isLoading } = useMutation({
     mutationFn: signInFunc,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: USER_SIGN_IN })
     },
   })
 
-  const signInHandler = async (e) => {
-    e.preventDefault()
-    await mutateAsync()
-    navigate('/')
-  }
+  if (isLoading) return <Loader />
   return (
     <div>
-      <form onSubmit={signInHandler} name="login" className={stylesSignIn.login}>
-        <input onChange={(e) => setInput({ ...input, email: e.target.value })} type="email" required value={input.email || ''} placeholder="Адрес электронной почты" />
-        <input
-          type="password"
-          required
-          placeholder="Пароль"
-          onChange={(e) => setInput({
-            ...input,
-            password: e.target.value,
-          })}
-        />
-        <button type="submit">Войти</button>
-        <h3>Нет аккаунта? </h3>
-        <Link to="/signup">
-          <button type="button">Зарегистрироваться</button>
-        </Link>
-      </form>
+      <Formik
+        initialValues={{
+          email: '',
+          password: '',
+        }}
+        validationSchema={Yup.object({
+          email: Yup.string().email('некорректный формат электронной почты').required(REQUIRED_ERROR_MESSAGE),
+          password: Yup.string()
+            .max(20, 'не более 20 символов')
+            .required(REQUIRED_ERROR_MESSAGE),
+        })}
+        onSubmit={async (values) => {
+          await mutateAsync(values)
+          navigate('/')
+        }}
+      >
+        <Form className={stylesSignIn.login}>
+          <Field name="email" type="email" placeholder="Адрес электронной почты" />
+          <ErrorMessage component="span" className={stylesSignIn.error} name="email" />
+
+          <Field name="password" type="password" placeholder="Пароль" />
+          <ErrorMessage component="span" className={stylesSignIn.error} name="password" />
+          <button type="submit">Войти</button>
+          <h3>Нет аккаунта? </h3>
+          <Link to="/signup">
+            <button type="button">Зарегистрироваться</button>
+          </Link>
+        </Form>
+      </Formik>
     </div>
   )
 }

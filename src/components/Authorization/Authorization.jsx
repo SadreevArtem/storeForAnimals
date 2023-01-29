@@ -74,12 +74,6 @@ export function Authorization() {
           <button type="button">Войти</button>
         </div>
       </Link>
-      <Link to="/useraccount">
-        <div className={stylesAccount.wrLink}>
-
-          <button type="button">Аккаунт</button>
-        </div>
-      </Link>
     </div>
   )
 }

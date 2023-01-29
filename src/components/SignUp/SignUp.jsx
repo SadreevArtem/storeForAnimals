@@ -1,17 +1,20 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useState } from 'react'
+import {
+  ErrorMessage, Field,
+  Form, Formik,
+} from 'formik'
 import { useNavigate } from 'react-router-dom'
+import * as Yup from 'yup'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
-import { SIGN_UP } from '../../utils/constants'
+import { REQUIRED_ERROR_MESSAGE, SIGN_UP } from '../../utils/constants'
 import stylesSignUp from './styles.module.scss'
 
 export function SignUp() {
-  const [input, setInput] = useState({})
   const { api } = useProductContext()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
 
-  const signUpFunc = () => api.signUpRequest(input)
+  const signUpFunc = (input) => api.signUpRequest(input)
     .then((res) => {
       if (res.status >= 200 && res.status < 300) {
         return res.json()
@@ -27,31 +30,41 @@ export function SignUp() {
     },
   })
 
-  const signUpHandler = async (e) => {
-    e.preventDefault()
-    await mutateAsync()
-    navigate('/')
-  }
-
   return (
     <div className={stylesSignUp.login}>
       <h2>Регистрация пользователя</h2>
-      <div>
-        <form onSubmit={signUpHandler} className={stylesSignUp.login}>
-          <input onChange={(e) => setInput({ ...input, email: e.target.value })} type="email" required value={input.email} placeholder="Адрес электронной почты" />
-          <input onChange={(e) => setInput({ ...input, group: e.target.value })} type="text" required value={input.group} placeholder="Группа" />
-          <input
-            type="password"
-            required
-            placeholder="Пароль"
-            onChange={(e) => setInput({
-              ...input,
-              password: e.target.value,
-            })}
-          />
+      <Formik
+        initialValues={{
+          email: '',
+          group: '',
+          password: '',
+        }}
+        validationSchema={Yup.object({
+          email: Yup.string().email('некорректный формат электронной почты').required(REQUIRED_ERROR_MESSAGE),
+          group: Yup.string()
+            .max(10, 'не более 10 символов')
+            .required(REQUIRED_ERROR_MESSAGE),
+          password: Yup.string()
+            .max(20, 'не более 20 символов')
+            .required(REQUIRED_ERROR_MESSAGE),
+        })}
+        onSubmit={async (values) => {
+          await mutateAsync(values)
+          navigate('/')
+        }}
+      >
+        <Form className={stylesSignUp.login}>
+          <Field name="email" type="email" placeholder="Адрес электронной почты" />
+          <ErrorMessage component="span" className={stylesSignUp.error} name="email" />
+
+          <Field name="group" type="text" placeholder="Группа" />
+          <ErrorMessage component="span" className={stylesSignUp.error} name="group" />
+
+          <Field name="password" type="password" placeholder="Пароль" />
+          <ErrorMessage component="span" className={stylesSignUp.error} name="password" />
           <button type="submit">Зарегистрироваться</button>
-        </form>
-      </div>
+        </Form>
+      </Formik>
     </div>
   )
 }

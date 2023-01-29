@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { Link, Navigate } from 'react-router-dom'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
 import { USER_INFO } from '../../utils/constants'
+import { AddProduct } from '../AddProduct/AddProduct'
 import { Loader } from '../Loader/Loader'
 import styleUserInfo from './styles.module.scss'
 
@@ -22,13 +23,14 @@ export function UserAccount() {
       <div>
         <img className={styleUserInfo.img} src={obj.avatar} alt="Avatar" />
       </div>
-      <div>
+      <div className={styleUserInfo.aboutUser}>
         <h3>{`${obj.name}`}</h3>
         <h4>{`${obj.about}`}</h4>
         <h4>{`${obj.email}`}</h4>
         <Link to="edit">
           <button type="button">Изменить профиль</button>
         </Link>
+        <AddProduct className={styleUserInfo.addProduct} />
       </div>
     </div>
   )

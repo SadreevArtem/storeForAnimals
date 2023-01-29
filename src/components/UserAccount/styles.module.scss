@@ -1,7 +1,7 @@
 .wr{
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 20px;
   color: #502314;
 }
 .img{
@@ -12,4 +12,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.addProduct {
+  margin-top: 20px;
+}
+.aboutUser{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }

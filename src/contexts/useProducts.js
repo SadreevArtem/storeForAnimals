@@ -80,6 +80,15 @@ export function useProducts() {
       body: JSON.stringify(input),
     })
 
+    addProductRequest = (input) => fetch(`${this.baseUrl}/products`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${token} `,
+      },
+      body: JSON.stringify(input),
+    })
+
     getInfoUser = () => fetch(`${this.baseUrl}/v2/sm8/users/me`, {
       method: 'GET',
       headers: {
@@ -89,7 +98,7 @@ export function useProducts() {
     })
 
     getProductsByIds(ids) {
-      return Promise.all(ids.map((id) => fetch(`https://api.react-learning.ru/products/${id}`, {
+      return Promise.all(ids.map((id) => fetch(`${this.baseUrl}/products/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
