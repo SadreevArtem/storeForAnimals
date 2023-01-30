@@ -8,10 +8,10 @@ export function Footer() {
         <div className={footerStyles.wr_logo}>
           <div className={footerStyles.logo_container}>
             <img src={dogLogo} alt="Dog_logo" />
-            <span className={footerStyles.logo_text}>BOBIK KING</span>
+            <span className={footerStyles.logo_text}>DOOG FOOD</span>
           </div>
           <div className={footerStyles.txt}>
-            <p> &reg; Интернет магазин bobik-king.ru</p>
+            <p> &reg; Интернет магазин dog-food.ru</p>
           </div>
         </div>
         <div className={footerStyles.catalog}>

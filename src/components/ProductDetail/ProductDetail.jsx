@@ -54,11 +54,15 @@ export function ProductDetail() {
             {' '}
             {data.wight}
           </h4>
+          <h4>{data.description.slice(0, 290)}</h4>
           <div className={stylesProductDetail.buttonWr}>
             <button type="button" onClick={addItemCartHandler}>в корзину</button>
           </div>
+          <div className={cart.some((el) => el.id === id) ? stylesProductDetail.cartSticker : 'hidden'}>
+            {cart.find((el) => el.id === id) ? `В корзине: ${cart.find((el) => el.id === id).counter}` : ''}
+          </div>
         </div>
-        <div>
+        <div className={stylesProductDetail.reviews}>
           <NavLink to="reviews">
             Отзывы
             {' '}
@@ -79,9 +83,6 @@ export function ProductDetail() {
         className={favorites.some((el) => el === id) ? stylesProductDetail.heart_red
           : stylesProductDetail.heart}
       />
-      <div className={cart.some((el) => el.id === id) ? stylesProductDetail.cartSticker : 'hidden'}>
-        {cart.find((el) => el.id === id) ? cart.find((el) => el.id === id).counter : ''}
-      </div>
     </div>
   )
 }

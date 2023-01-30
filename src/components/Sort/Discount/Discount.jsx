@@ -1,17 +1,16 @@
 import { useQuery } from '@tanstack/react-query'
-import { Navigate } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { useProductContext } from '../../contexts/ProductsContextProvider'
-import { PRODUCTS } from '../../utils/constants'
-import { useFilterContextData } from '../../contexts/FilterContext/FilterContextProvider'
-import { Loader } from '../Loader/Loader'
-import { ProductItem } from '../ProductItem/ProductItem'
-import stylesIndex from './styles.module.scss'
-import { Sort } from '../Sort/Sort'
+import { useProductContext } from '../../../contexts/ProductsContextProvider'
+import { PRODUCTS } from '../../../utils/constants'
+import { useFilterContextData } from '../../../contexts/FilterContext/FilterContextProvider'
+import { Loader } from '../../Loader/Loader'
+import { ProductItem } from '../../ProductItem/ProductItem'
+import stylesDiscount from './styles.module.scss'
 
 export const getProductsQueryKey = (filters) => PRODUCTS.concat(Object.values(filters))
 
-export function Index() {
+export function Discount() {
   const filters = useFilterContextData()
   const token = useSelector((store) => store.token.value)
   const { api } = useProductContext()
@@ -36,12 +35,21 @@ export function Index() {
       </div>
     )
   }
+  console.log({ data })
   return (
     <>
-      <Sort />
-      <div className={stylesIndex.wr}>
+      <div className={stylesDiscount.wr_btn}>
+        <h2>Распродажа</h2>
+        <Link to="/">
+          <button type="button">Назад</button>
+        </Link>
+      </div>
+      <div className={stylesDiscount.wr}>
         {
-          data.map((el) => <ProductItem key={el[id]} {...el} />)
+          data
+            .filter((el) => el.discount !== 0)
+            .sort((a, b) => b.discount - a.discount)
+            .map((el) => <ProductItem key={el[id]} {...el} />)
         }
       </div>
     </>
