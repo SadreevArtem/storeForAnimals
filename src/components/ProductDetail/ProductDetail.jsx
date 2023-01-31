@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { FaRegHeart } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useParams } from 'react-router-dom'
-import { useProductContext } from '../../contexts/ProductsContextProvider'
+import { api } from '../../API/api'
 import { addItemCart } from '../../redux/slices/cartSlice/cartSlice'
 import { addItemFavorites } from '../../redux/slices/favoritesSlice/favoritesSlice'
 import { PRODUCT_DETAIL } from '../../utils/constants'
@@ -11,11 +11,11 @@ import stylesProductDetail from './styles.module.scss'
 
 export function ProductDetail() {
   const { id } = useParams()
-  const { api } = useProductContext()
+  const token = useSelector((store) => store.token.value)
   const favorites = useSelector((store) => store.favorites)
   const cart = useSelector((store) => store.cart)
   const dispatch = useDispatch()
-  const getProductFunc = () => api.getProductItem(id).then((res) => res.json())
+  const getProductFunc = () => api.getProductItem(id, token).then((res) => res.json())
   const { data, isLoading } = useQuery({
     queryKey: PRODUCT_DETAIL,
     queryFn: getProductFunc,

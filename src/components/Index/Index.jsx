@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Navigate, useSearchParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { useProductContext } from '../../contexts/ProductsContextProvider'
 import { PRODUCTS } from '../../utils/constants'
 import { useFilterContextData } from '../../contexts/FilterContext/FilterContextProvider'
 import { Loader } from '../Loader/Loader'
 import { ProductItem } from '../ProductItem/ProductItem'
 import stylesIndex from './styles.module.scss'
 import { Sort } from '../Sort/Sort'
+import { api } from '../../API/api'
 
 export const getProductsQueryKey = (filters, sort) => PRODUCTS
   .concat(Object.values(filters)).concat(sort)
@@ -18,7 +18,6 @@ export function Index() {
   const [sort, setSort] = useState(() => searchParams.get('sort') ?? '')
   const filters = useFilterContextData()
   const token = useSelector((store) => store.token.value)
-  const { api } = useProductContext()
   if (!token) return <Navigate to="/signin" />
 
   useEffect(() => {
@@ -28,7 +27,7 @@ export function Index() {
     })
   }, [sort])
 
-  const getProductsFn = (filter) => api.getAllProducts(filter).then((res) => res.json())
+  const getProductsFn = (filter) => api.getAllProducts(filter, token).then((res) => res.json())
   const { data, isLoading } = useQuery({
     queryKey: getProductsQueryKey(filters, sort),
     queryFn: () => getProductsFn({

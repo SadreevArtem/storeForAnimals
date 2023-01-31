@@ -5,17 +5,18 @@ import {
   Form, Formik,
 } from 'formik'
 import * as Yup from 'yup'
-import { useProductContext } from '../../contexts/ProductsContextProvider'
+import { useSelector } from 'react-redux'
 import { REQUIRED_ERROR_MESSAGE, USER_INFO } from '../../utils/constants'
 import { Loader } from '../Loader/Loader'
 import stylesUserEdit from './styles.module.scss'
+import { api } from '../../API/api'
 
 export function UserEdit() {
-  const { api } = useProductContext()
+  const token = useSelector((store) => store.token.value)
   const navigate = useNavigate()
   const queryClient = useQueryClient()
 
-  const updateUserInfo = (input) => api.updateUserRequest(input)
+  const updateUserInfo = (input) => api.updateUserRequest(input, token)
 
   const { mutateAsync, isLoading } = useMutation({
     mutationFn: updateUserInfo,

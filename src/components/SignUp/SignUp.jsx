@@ -5,12 +5,11 @@ import {
 } from 'formik'
 import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
-import { useProductContext } from '../../contexts/ProductsContextProvider'
+import { api } from '../../API/api'
 import { REQUIRED_ERROR_MESSAGE, SIGN_UP } from '../../utils/constants'
 import stylesSignUp from './styles.module.scss'
 
 export function SignUp() {
-  const { api } = useProductContext()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
 

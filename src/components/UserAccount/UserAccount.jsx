@@ -1,17 +1,16 @@
 import { useQuery } from '@tanstack/react-query'
 import { useSelector } from 'react-redux'
 import { Link, Navigate } from 'react-router-dom'
-import { useProductContext } from '../../contexts/ProductsContextProvider'
+import { api } from '../../API/api'
 import { USER_INFO } from '../../utils/constants'
 import { AddProduct } from '../AddProduct/AddProduct'
 import { Loader } from '../Loader/Loader'
 import styleUserInfo from './styles.module.scss'
 
 export function UserAccount() {
-  const { api } = useProductContext()
   const token = useSelector((store) => store.token.value)
   if (!token) return <Navigate to="/signin" />
-  const getUserInfo = () => api.getInfoUser().then((res) => res.json())
+  const getUserInfo = () => api.getInfoUser(token).then((res) => res.json())
 
   const { data: user, isLoading } = useQuery({
     queryKey: USER_INFO,

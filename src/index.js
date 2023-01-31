@@ -10,7 +10,6 @@ import { SignIn } from './components/SignIn/SignIn'
 import { SignUp } from './components/SignUp/SignUp'
 import { UserAccount } from './components/UserAccount/UserAccount'
 import { UserEdit } from './components/UserEdit/UserEdit'
-import { ProductsContextProvider } from './contexts/ProductsContextProvider'
 import { Cart } from './components/Cart/Cart'
 import { store } from './redux/store'
 import { FilterContextProvider } from './contexts/FilterContext/FilterContextProvider'
@@ -70,14 +69,12 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ProductsContextProvider>
+    <FilterContextProvider>
+      <Provider store={store}>
         <QueryClientProvider client={queryClient}>
-          <FilterContextProvider>
-            <RouterProvider router={router} />
-          </FilterContextProvider>
+          <RouterProvider router={router} />
         </QueryClientProvider>
-      </ProductsContextProvider>
-    </Provider>
+      </Provider>
+    </FilterContextProvider>
   </React.StrictMode>,
 )

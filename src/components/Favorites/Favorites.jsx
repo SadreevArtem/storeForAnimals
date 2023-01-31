@@ -1,20 +1,20 @@
 import { useQuery } from '@tanstack/react-query'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { useProductContext } from '../../contexts/ProductsContextProvider'
+import { api } from '../../API/api'
 import { FavoritesItem } from '../FavoritesItem/FavoritesItem'
 import { Loader } from '../Loader/Loader'
 import stylesFavorites from './styles.module.scss'
 
 export function Favorites() {
-  const { api } = useProductContext()
   const favorites = useSelector((store) => store.favorites)
+  const token = useSelector((store) => store.token.value)
   const getFavoritesItemsQueryKey = (cartItemsId) => ['vavorites'].concat(cartItemsId)
   const {
     data: products, isLoading, isError,
   } = useQuery({
     queryKey: getFavoritesItemsQueryKey(favorites.map((product) => product)),
-    queryFn: () => api.getProductsByIds(favorites.map((product) => product)),
+    queryFn: () => api.getProductsByIds(favorites.map((product) => product), token),
   })
   const idn = '_id'
   if (isLoading) return <Loader />

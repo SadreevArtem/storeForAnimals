@@ -2,7 +2,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { useProductContext } from '../../contexts/ProductsContextProvider'
+import { api } from '../../API/api'
 import { changeAllSelectStatus, clearCart } from '../../redux/slices/cartSlice/cartSlice'
 import { CartItem } from '../CartItem/CartItem'
 import { Loader } from '../Loader/Loader'
@@ -10,8 +10,8 @@ import img from './2527488.png'
 import stylesCart from './styles.module.scss'
 
 export function Cart() {
-  const { api } = useProductContext()
   const cart = useSelector((store) => store.cart)
+  const token = useSelector((store) => store.token.value)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const getCartItemsQueryKey = (cartItemsId) => ['cart'].concat(cartItemsId)
@@ -19,7 +19,7 @@ export function Cart() {
     data: products, isLoading, isError,
   } = useQuery({
     queryKey: getCartItemsQueryKey(cart.map((product) => product.id)),
-    queryFn: () => api.getProductsByIds(cart.map((product) => product.id)),
+    queryFn: () => api.getProductsByIds(cart.map((product) => product.id), token),
   })
   const idn = '_id'
   if (isLoading) return <Loader />

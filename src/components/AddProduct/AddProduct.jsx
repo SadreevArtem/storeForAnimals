@@ -2,9 +2,10 @@ import {
   ErrorMessage, Field, Form, Formik,
 } from 'formik'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
-import { useProductContext } from '../../contexts/ProductsContextProvider'
+import { api } from '../../API/api'
 import {
   INTEGER_ERROR_MESSAGE, POSITIVE_ERROR_MESSAGE,
   REQUIRED_ERROR_MESSAGE,
@@ -14,8 +15,7 @@ import stylesAddProduct from './styles.module.scss'
 
 export function AddProduct() {
   const navigate = useNavigate()
-  const { api } = useProductContext()
-
+  const token = useSelector((store) => store.token.value)
   const [isOpen, setIsOpen] = useState(false)
 
   const clickHandler = () => {
@@ -26,7 +26,7 @@ export function AddProduct() {
     setIsOpen(false)
   }
 
-  const submitHandler = (values) => api.addProductRequest(values)
+  const submitHandler = (values) => api.addProductRequest(values, token)
     .then((res) => {
       if (res.status >= 200 && res.status < 300) {
         return res.json()

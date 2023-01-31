@@ -8,14 +8,13 @@ import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import stylesSignIn from './styles.module.scss'
-import { useProductContext } from '../../contexts/ProductsContextProvider'
 import { REQUIRED_ERROR_MESSAGE, USER_SIGN_IN } from '../../utils/constants'
 import { setToken } from '../../redux/slices/tokenSlice/tokenSlice'
 import { Loader } from '../Loader/Loader'
+import { api } from '../../API/api'
 
 export function SignIn() {
   const token = useSelector((store) => store.token.value) || ''
-  const { api } = useProductContext()
   const navigate = useNavigate()
   useEffect(() => {
     if (token) navigate('/')
