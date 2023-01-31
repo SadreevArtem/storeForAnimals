@@ -1,5 +1,6 @@
+import { useState, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useSearchParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useProductContext } from '../../contexts/ProductsContextProvider'
 import { PRODUCTS } from '../../utils/constants'
@@ -12,10 +13,21 @@ import { Sort } from '../Sort/Sort'
 export const getProductsQueryKey = (filters) => PRODUCTS.concat(Object.values(filters))
 
 export function Index() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [sort, setSort] = useState(() => searchParams.get('sort') ?? '')
   const filters = useFilterContextData()
   const token = useSelector((store) => store.token.value)
   const { api } = useProductContext()
   if (!token) return <Navigate to="/signin" />
+
+  useEffect(() => {
+    setSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+      sort,
+    })
+  }, [sort])
+
+  console.log({ searchParams })
 
   const getProductsFn = (filter) => api.getAllProducts(filter).then((res) => res.json())
   const { data, isLoading } = useQuery({
@@ -36,14 +48,58 @@ export function Index() {
       </div>
     )
   }
-  return (
-    <>
-      <Sort />
-      <div className={stylesIndex.wr}>
-        {
-          data.map((el) => <ProductItem key={el[id]} {...el} />)
-        }
-      </div>
-    </>
-  )
+  if (sort === '') {
+    return (
+      <>
+        <Sort setSort={setSort} setSearchParams={setSearchParams} />
+        <div className={stylesIndex.wr}>
+          {
+            data.map((el) => <ProductItem key={el[id]} {...el} />)
+          }
+        </div>
+      </>
+    )
+  }
+  if (sort === 'new') {
+    return (
+      <>
+        <Sort setSort={setSort} setSearchParams={setSearchParams} />
+        <div className={stylesIndex.wr}>
+          {
+            data.filter((el) => el.tags.includes('new')).map((el) => <ProductItem key={el[id]} {...el} />)
+          }
+        </div>
+      </>
+    )
+  }
+  if (sort === 'cheap') {
+    return (
+      <>
+        <Sort setSort={setSort} setSearchParams={setSearchParams} />
+        <div className={stylesIndex.wr}>
+          {
+            data
+              .sort((a, b) => a.price - b.price)
+              .map((el) => <ProductItem key={el[id]} {...el} />)
+          }
+        </div>
+      </>
+    )
+  }
+  if (sort === 'discount') {
+    return (
+      <>
+        <Sort setSort={setSort} setSearchParams={setSearchParams} />
+        <div className={stylesIndex.wr}>
+          {
+            data
+              .filter((el) => el.discount !== 0)
+              .sort((a, b) => b.discount - a.discount)
+              .map((el) => <ProductItem key={el[id]} {...el} />)
+          }
+        </div>
+      </>
+    )
+  }
+  return <h2>Products</h2>
 }

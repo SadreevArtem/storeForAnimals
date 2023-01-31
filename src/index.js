@@ -17,9 +17,6 @@ import { FilterContextProvider } from './contexts/FilterContext/FilterContextPro
 import { ProductDetail } from './components/ProductDetail/ProductDetail'
 import { Reviews } from './components/Reviews/Reviews'
 import { Favorites } from './components/Favorites/Favorites'
-import { NewProducts } from './components/Sort/NewProducts/NewProducts'
-import { Discount } from './components/Sort/Discount/Discount'
-import { Cheaper } from './components/Sort/Cheaper/Cheaper'
 
 const queryClient = new QueryClient()
 
@@ -29,18 +26,6 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <Index /> },
-      {
-        path: 'products/new',
-        element: <NewProducts />,
-      },
-      {
-        path: 'products/discount',
-        element: <Discount />,
-      },
-      {
-        path: 'products/cheaper',
-        element: <Cheaper />,
-      },
       {
         path: 'products/:id',
         element: <ProductDetail />,

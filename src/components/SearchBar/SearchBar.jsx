@@ -11,7 +11,10 @@ export function SearchBar() {
   const debounceValue = useDebounce(input, 500)
 
   useEffect(() => {
-    setSearchParams({ query: input })
+    setSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+      query: input,
+    })
   }, [input])
 
   useEffect(() => {

@@ -77,3 +77,13 @@
   bottom: 100px;
   height: 100px;
 }
+
+.sort_button{
+  display: flex;
+  justify-content: flex-end;
+  h4 {
+    background-color:  rgb(215, 203, 203);
+    padding: 8px;
+    border-radius: 16px;
+  }
+}
