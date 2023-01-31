@@ -9,18 +9,17 @@ import stylesReviews from './styles.module.scss'
 export function Reviews() {
   const { api } = useProductContext()
   const { id } = useParams()
+  const idn = '_id'
   const getProductReviewFunc = () => api.getProductReview(id).then((res) => res.json())
-  console.log(id)
   const { data, isLoading } = useQuery({
     queryKey: REVIEWS,
     queryFn: getProductReviewFunc,
   })
-  console.log({ data })
-  if (isLoading) return <Loader />
 
+  if (isLoading) return <Loader />
   return (
     <div className={stylesReviews.wr}>
-      {data.map((el) => <ReviewItem key={el.id} {...el} />)}
+      {data.map((el) => <ReviewItem key={el[idn]} {...el} />)}
     </div>
   )
 }

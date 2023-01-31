@@ -10,7 +10,8 @@ import { ProductItem } from '../ProductItem/ProductItem'
 import stylesIndex from './styles.module.scss'
 import { Sort } from '../Sort/Sort'
 
-export const getProductsQueryKey = (filters) => PRODUCTS.concat(Object.values(filters))
+export const getProductsQueryKey = (filters, sort) => PRODUCTS
+  .concat(Object.values(filters)).concat(sort)
 
 export function Index() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -27,11 +28,9 @@ export function Index() {
     })
   }, [sort])
 
-  console.log({ searchParams })
-
   const getProductsFn = (filter) => api.getAllProducts(filter).then((res) => res.json())
   const { data, isLoading } = useQuery({
-    queryKey: getProductsQueryKey(filters),
+    queryKey: getProductsQueryKey(filters, sort),
     queryFn: () => getProductsFn({
       query: filters.search,
     }),
@@ -51,7 +50,7 @@ export function Index() {
   if (sort === '') {
     return (
       <>
-        <Sort setSort={setSort} setSearchParams={setSearchParams} />
+        <Sort setSort={setSort} />
         <div className={stylesIndex.wr}>
           {
             data.map((el) => <ProductItem key={el[id]} {...el} />)
@@ -63,7 +62,7 @@ export function Index() {
   if (sort === 'new') {
     return (
       <>
-        <Sort setSort={setSort} setSearchParams={setSearchParams} />
+        <Sort setSort={setSort} />
         <div className={stylesIndex.wr}>
           {
             data.filter((el) => el.tags.includes('new')).map((el) => <ProductItem key={el[id]} {...el} />)
@@ -75,7 +74,7 @@ export function Index() {
   if (sort === 'cheap') {
     return (
       <>
-        <Sort setSort={setSort} setSearchParams={setSearchParams} />
+        <Sort setSort={setSort} />
         <div className={stylesIndex.wr}>
           {
             data
@@ -89,7 +88,7 @@ export function Index() {
   if (sort === 'discount') {
     return (
       <>
-        <Sort setSort={setSort} setSearchParams={setSearchParams} />
+        <Sort setSort={setSort} />
         <div className={stylesIndex.wr}>
           {
             data

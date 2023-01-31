@@ -15,7 +15,6 @@ export function ProductDetail() {
   const favorites = useSelector((store) => store.favorites)
   const cart = useSelector((store) => store.cart)
   const dispatch = useDispatch()
-  console.log(id)
   const getProductFunc = () => api.getProductItem(id).then((res) => res.json())
   const { data, isLoading } = useQuery({
     queryKey: PRODUCT_DETAIL,
@@ -29,7 +28,7 @@ export function ProductDetail() {
     dispatch(addItemFavorites(id))
   }
   const discountFunc = (p, discont) => Math.round((p - p * discont * 0.01) / 100) * 100
-  console.log(data)
+
   if (isLoading) return <Loader />
   return (
     <div className={stylesProductDetail.wr}>

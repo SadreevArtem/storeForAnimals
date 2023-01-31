@@ -17,6 +17,7 @@ import { FilterContextProvider } from './contexts/FilterContext/FilterContextPro
 import { ProductDetail } from './components/ProductDetail/ProductDetail'
 import { Reviews } from './components/Reviews/Reviews'
 import { Favorites } from './components/Favorites/Favorites'
+import { ErrorPage } from './components/ErrorPage/ErrorPage'
 
 const queryClient = new QueryClient()
 
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: 'useraccount/edit',
         element: <UserEdit />,
+      },
+      {
+        path: '*',
+        element: <ErrorPage />,
       },
     ],
   },
