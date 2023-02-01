@@ -95,3 +95,23 @@
   color: red;
   cursor: pointer;
 }
+
+
+@media (max-width: 650px) {
+  .img{
+    height: 75px;
+    max-width: 220px;
+  }
+  .card_container {
+    margin: auto;
+    width: 430px;
+  }
+  .wr_counter{
+    button {
+      font-size: 14px;
+    }
+  }
+  .btn {
+    flex-direction: column;
+  }
+}

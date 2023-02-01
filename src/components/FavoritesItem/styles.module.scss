@@ -89,3 +89,26 @@
   top: 60px;
   right: 10px;
 }
+
+@media (max-width: 650px) {
+  .img{
+    height: 75px;
+    max-width: 220px;
+  }
+  .card_container {
+    flex-direction: column;
+    width: auto;
+    height: auto;
+  }
+  .discount{
+    left: 5px;
+  }
+  .newSticker{
+    top: 20px;
+    right: 5px;
+  }
+  .cartSticker{
+    top: 165px;
+    right: 60px;
+  }
+}

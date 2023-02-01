@@ -44,7 +44,7 @@ export function CartItem({
             </div>
           </NavLink>
           <div>
-            <h4>{`${name.slice(0, 25)}...`}</h4>
+            <h4>{`${name.slice(0, 18)}...`}</h4>
             <h5 className={discount ? stylesIndex.discount_price : 'hidden'}>
               {price}
               ₽

@@ -9,46 +9,55 @@
   position: relative;
 }
 
-.wrLink{
+.wrLink {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin: 0 10px;
+
   button {
-  font-family: 'Oswald', sans-serif;
-  font-size: 16px;
-  color: #502314;
-  background: #d7c7b4;
-  border: none;
-  border-radius: 20px;
-  padding: 6px 20px; 
-  cursor: pointer;
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    color: #502314;
+    background: #d7c7b4;
+    border: none;
+    border-radius: 20px;
+    padding: 6px 20px;
+    cursor: pointer;
+  }
 }
-}
-.cartSticker{
+
+.cartSticker {
   text-align: center;
   background: #ff8720;
   border-radius: 50%;
   width: 25px;
   color: #502314;
   position: absolute;
-  top:-12px;
+  top: -12px;
   right: 230px;
 }
-.favoritesSticker{
+
+.favoritesSticker {
   text-align: center;
   background: #ff8720;
   border-radius: 50%;
   width: 25px;
   color: #502314;
   position: absolute;
-  top:-12px;
+  top: -12px;
   right: 155px;
 }
-.icons{
+
+.icons {
   font-size: 17px;
-  padding-top:5px;
+  padding-top: 5px;
 }
 
-
+@media (max-width: 650px) {
+  .wr{
+    display: none;
+  }
+  
+}

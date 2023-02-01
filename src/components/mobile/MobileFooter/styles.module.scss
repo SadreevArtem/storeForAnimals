@@ -1,0 +1,47 @@
+.wr {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 2;
+  width: 100%;
+  background-color: #502314;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.wr_item{
+  position: relative;
+  text-align: center;
+  h4 {
+    margin-top: 0;
+    color: #f5ebdc;
+  }
+}
+
+.icon{
+  font-size: 30px;
+  margin-top: 7px;
+  color: #f5ebdc;
+}
+.cartSticker {
+  text-align: center;
+  background: #ff8720;
+  border-radius: 50%;
+  width: 25px;
+  color: #502314;
+  position: absolute;
+  top: 0;
+  left: 40px;
+}
+
+.favoritesSticker {
+  text-align: center;
+  background: #ff8720;
+  border-radius: 50%;
+  width: 25px;
+  color: #502314;
+  position: absolute;
+  top: 0;
+  left: 45px;
+}
