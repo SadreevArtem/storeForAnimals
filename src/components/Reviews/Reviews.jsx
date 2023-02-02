@@ -21,6 +21,7 @@ export function Reviews() {
   return (
     <div className={stylesReviews.wr}>
       {data.map((el) => <ReviewItem key={el[idn]} {...el} />)}
+      <h2>Отзывы покупателей</h2>
     </div>
   )
 }

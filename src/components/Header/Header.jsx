@@ -19,7 +19,7 @@ export function Header() {
       <Link to="/">
         <div className={stylesHeader.logo_container}>
           <img className={stylesHeader.img} src={dogLogo} alt="Dog_logo" />
-          <span className={stylesHeader.span}>DOOG FOOD</span>
+          <span className={stylesHeader.span}>DOG FOOD</span>
         </div>
       </Link>
       <SearchBar />
